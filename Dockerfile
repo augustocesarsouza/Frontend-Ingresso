@@ -11,6 +11,6 @@ RUN npm install -g nodemon
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3050
 
 CMD ["npm", "run", "preview"]

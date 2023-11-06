@@ -3,7 +3,7 @@ import * as Styled from './styled';
 const Login = () => {
   return (
     <Styled.ContainerMain>
-      <h1>Funciounou</h1>
+      <h1>Tetse</h1>
     </Styled.ContainerMain>
   );
 };
