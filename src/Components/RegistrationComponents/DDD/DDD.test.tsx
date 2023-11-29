@@ -3,7 +3,8 @@ import DDD from './DDD';
 
 describe('DDD', () => {
   test('should render input and span', () => {
-    const { container } = render(<DDD />);
+    const fn = jest.fn();
+    const { container } = render(<DDD setDDDInfo={fn} dd="" dddInfo="" setDD={fn} />);
 
     const input = container.querySelector('#input-ddd');
     expect(input).toBeInTheDocument();

@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import * as Styled from './styled';
 
-const Phone = () => {
+interface PhoneProps {
+  setPhoneInfo: React.Dispatch<React.SetStateAction<string>>;
+  phoneInfo: string;
+  number: string;
+  setNumber: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Phone = ({ setPhoneInfo, phoneInfo, number, setNumber }: PhoneProps) => {
   const [numberYes, setNumberYes] = useState(false);
   const [FocusOrBlur, setFocusOrBlur] = useState(false);
   const [backspacePress, setBackspacePress] = useState(false);
@@ -12,6 +19,25 @@ const Phone = () => {
   const [cursorPositionIndex, setCursorPositionIndex] = useState(0);
   const [cursorPositionIndexDelete, setCursorPositionIndexDelete] = useState(0);
   const refInput = useRef<HTMLInputElement | null>(null);
+
+  const [typeInputPhone, setTypeInputPhone] = useState(false);
+
+  useEffect(() => {
+    let valueInputPhone = refInput.current.value;
+
+    let arrayString = [];
+    for (let i = 0; i < valueInputPhone.length; i++) {
+      if (!isNaN(Number(valueInputPhone[i]))) {
+        arrayString.push(valueInputPhone[i]);
+      }
+    }
+    const joinString = arrayString.join('');
+    if (joinString.length === 9) {
+      setPhoneInfo(joinString);
+    } else {
+      setPhoneInfo('');
+    }
+  }, [refInput.current, typeInputPhone]);
 
   const handleCLick = (e: KeyboardEvent) => {
     if (e.key === 'Backspace') {
@@ -37,6 +63,7 @@ const Phone = () => {
   }, []);
 
   const handleChangeInput = () => {
+    setTypeInputPhone((prev) => !prev);
     if (backspacePress) {
       const firstUnderscoreIndex = hasValueInput.indexOf('_');
 
@@ -129,6 +156,24 @@ const Phone = () => {
       refInput.current.setSelectionRange(firstUnderscoreIndex, firstUnderscoreIndex);
     }
   };
+
+  useEffect(() => {
+    if (phoneInfo.length <= 0) return;
+    setHasValueInput(phoneInfo);
+  }, [phoneInfo]);
+
+  useEffect(() => {
+    if (number.length <= 0) return;
+
+    setHasValueInputName(true);
+    setHasValueInput(number);
+  }, [number]);
+
+  useEffect(() => {
+    if (!hasValueInput.includes('_')) {
+      setNumber(hasValueInput);
+    }
+  }, [hasValueInput]);
 
   return (
     <Styled.ContainerYourWarning>

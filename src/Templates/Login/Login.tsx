@@ -4,11 +4,7 @@ import LoginWithGoogle from '../../Components/LoginComponents/LoginWithGoogle/Lo
 import Header from '../../Components/LoginComponents/SectionFirst/Header/Header';
 import Form from '../../Components/LoginComponents/SectionFirst/Form/Form';
 import AddressCompany from '../../Components/AddressCompany/AddressCompany';
-import BenefitsBeUserCompo from '../../Components/LoginComponents/BenefitsBeUserCompo/BenefitsBeUserCompo';
-import CardSvg from '../../Svg/CardSvg';
-import TicketSvg from '../../Svg/TicketSvg';
-import HeartSvg from '../../Svg/HeartSvg';
-import WithdrawSvg from '../../Svg/WithdrawSvg';
+import BenefitsBeUser from '../../Components/LoginComponents/SectionSecond/BenefitsBeUser/BenefitsBeUser';
 
 const Login = () => {
   return (
@@ -18,23 +14,12 @@ const Login = () => {
         <LoginWithGoogle />
         <Styled.ContainerLoginWithIngressoAndCreateNewAccount>
           <Styled.Section $section="1">
-            <Header />
+            <Header text="Entrar como cliente Ingresso.com" />
             <Form />
           </Styled.Section>
           <Styled.Section $section="2">
-            <Styled.Header>
-              <Styled.H1>Criar nova conta</Styled.H1>
-            </Styled.Header>
-            <Styled.ContainerCreateNewAccount>
-              <Styled.p>Vantagens de ser um cliente Ingresso.com</Styled.p>
-            </Styled.ContainerCreateNewAccount>
-            <Styled.ContainerBenefitsBeUser>
-              <BenefitsBeUserCompo svg={<CardSvg />} text={'Salvar Cartões'} />
-              <BenefitsBeUserCompo svg={<TicketSvg />} text={'Comprar rapido'} />
-              <BenefitsBeUserCompo svg={<HeartSvg />} text={'Favoritar cinemas'} />
-              <BenefitsBeUserCompo svg={<WithdrawSvg />} text={'Retirar pelo App'} />
-            </Styled.ContainerBenefitsBeUser>
-            <Styled.Button>CRIAR UMA NOVA CONTA</Styled.Button>
+            <Header text="Criar nova conta" />
+            <BenefitsBeUser />
           </Styled.Section>
         </Styled.ContainerLoginWithIngressoAndCreateNewAccount>
       </Styled.ContainerInternal>

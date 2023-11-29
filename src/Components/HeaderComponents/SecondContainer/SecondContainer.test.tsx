@@ -2,12 +2,23 @@ import { screen } from '@testing-library/react';
 import SecondContainer from './SecondContainer';
 import { RenderTheme } from '../../../Style/RenderTheme';
 import { MemoryRouter } from 'react-router-dom';
+import { ContextHome } from '../../../Templates/Home/Home';
 
 describe('SecondContainer', () => {
+  let userObj = {
+    id: '59a889f9-2695-45bf-b846-2b207e1b5539',
+    name: 'Augusto',
+    email: 'augustocesarsantana90@gmail.com',
+  };
+
+  const setUserObj = null;
+
   test('should have justify-content: flex-end', () => {
     RenderTheme(
       <MemoryRouter>
-        <SecondContainer />
+        <ContextHome.Provider value={{ userObj, setUserObj }}>
+          <SecondContainer />
+        </ContextHome.Provider>
       </MemoryRouter>
     );
 
@@ -21,7 +32,9 @@ describe('SecondContainer', () => {
   test('should render svg Loupe', () => {
     RenderTheme(
       <MemoryRouter>
-        <SecondContainer />
+        <ContextHome.Provider value={{ userObj, setUserObj }}>
+          <SecondContainer />
+        </ContextHome.Provider>
       </MemoryRouter>
     );
 
@@ -31,35 +44,12 @@ describe('SecondContainer', () => {
     expect(svgLoupe).toBeInTheDocument();
   });
 
-  test('should render svg UserLogo', () => {
-    RenderTheme(
-      <MemoryRouter>
-        <SecondContainer />
-      </MemoryRouter>
-    );
-
-    const containerLocation = screen.getByTestId('container-user-logo');
-    const svgUserLogo = containerLocation.firstChild as SVGElement;
-
-    expect(svgUserLogo).toBeInTheDocument();
-  });
-
-  test('should render span register or login', () => {
-    RenderTheme(
-      <MemoryRouter>
-        <SecondContainer />
-      </MemoryRouter>
-    );
-
-    const spanRegister = screen.getByTestId('span-entry-register');
-
-    expect(spanRegister).toBeInTheDocument();
-  });
-
   test('should render svg questionMarkSvg', () => {
     RenderTheme(
       <MemoryRouter>
-        <SecondContainer />
+        <ContextHome.Provider value={{ userObj, setUserObj }}>
+          <SecondContainer />
+        </ContextHome.Provider>
       </MemoryRouter>
     );
 
@@ -72,7 +62,9 @@ describe('SecondContainer', () => {
   test('should matchSnapshot', () => {
     const { container } = RenderTheme(
       <MemoryRouter>
-        <SecondContainer />
+        <ContextHome.Provider value={{ userObj, setUserObj }}>
+          <SecondContainer />
+        </ContextHome.Provider>
       </MemoryRouter>
     );
 

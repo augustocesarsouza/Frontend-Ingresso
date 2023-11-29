@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 
-export const ContainerSelect = styled.div`
+interface ContainerSelectProps {
+  $whatcomponentimrendering: string;
+}
+
+export const ContainerSelect = styled.div<ContainerSelectProps>`
   display: flex;
   width: 19rem;
+  width: ${props => props.$whatcomponentimrendering === "alreadyLogged" && "12.5rem"};
 `
 
 export const Select = styled.select`

@@ -19,16 +19,19 @@ export const ContainerFooter = styled.div`
 export const Address = styled.address`
   font-size: 13px;
   color: rgb(102 102 102);
-  
-  
 `
 
-export const Span = styled.span`
+interface SpanProps {
+  span: string;
+}
+
+export const Span = styled.span<SpanProps>`
   font-size: 12px;
-  color: #2587d5;
-  cursor: pointer;
+  color: ${props => props.span === "2" && "#2587d5"};
+  cursor: ${props => props.span === "2" && "pointer"};
+
 
   &:hover {
-    color: #2587d5c9;
+    color: ${props => props.span === "2" && "#2587d5c9"};
   } 
 `

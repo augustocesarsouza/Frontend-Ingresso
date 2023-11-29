@@ -69,11 +69,41 @@ const Registration = () => {
               setVerifyFields={setVerifyFields}
               setValueOfPassword={setValueOfPassword}
             />
-            <BirthdayAndGender />
-            <PhoneNumber />
-            <Cep setUseLocationData={setUseLocationData} />
-            <UserLocationData useLocationData={useLocationData} />
-            <AdditionalMessages recaptchaCallback={recaptchaCallback} />
+            <BirthdayAndGender
+              setBirthday={setBirthday}
+              setGender={setGender}
+              birthday={birthday}
+              gender={gender}
+              whatComponentImRendering=""
+            />
+            <PhoneNumber setPhone={setPhone} dd="" number="" setDD={null} setNumber={null} />
+            <Cep setUseLocationData={setUseLocationData} setCep={setCep} cepp={cep} />
+            <UserLocationData
+              useLocationData={useLocationData}
+              setLogradouro={setLogradouro}
+              setNumero={setNumero}
+              setComplemento={setComplemento}
+              setReferencia={setReferencia}
+              setBairro={setBairro}
+              setEstado={setEstado}
+              setCidade={setCidade}
+              logradouro={logradouro}
+              numero={numero}
+              complemento={complemento}
+              referencia={referencia}
+              bairro={bairro}
+              estado={estado}
+              cidade={cidade}
+              whatComponentImRendering=""
+            />
+            <AdditionalMessages
+              recaptchaCallback={recaptchaCallback}
+              changeOrNot={null}
+              senhaInvalida={null}
+              setPasswordConfirm={null}
+              setSenhaInvalida={null}
+              nameUserChangeBoolean={false}
+            />
             <ButtonAllComponent
               setVerifyFields={setVerifyFields}
               disableButton={disableButton}
@@ -82,6 +112,27 @@ const Registration = () => {
               valueOfEmail={valueOfEmail}
               valueOfEmailConfirm={valueOfEmailConfirm}
               valueOfPassword={valueOfPassword}
+              logradouro={logradouro}
+              numero={numero}
+              complemento={complemento}
+              referencia={referencia}
+              bairro={bairro}
+              estado={estado}
+              cidade={cidade}
+              cep={cep}
+              phone={phone}
+              birthday={birthday}
+              gender={gender}
+              whatComponentImRendering=""
+              objUpdateRegisterUser={null}
+              passwordConfirm=""
+              setActiveReCaptcha={null}
+              setChangeOrNot={null}
+              setSenhaInvalida={null}
+              setUpdatedSucessDataUser={null}
+              changeOrNot={false}
+              nameUserChange=""
+              nameUserChangeBoolean={false}
             />
           </Styled.ContainerInputMain>
         </Styled.Form>

@@ -1,4 +1,4 @@
-import CheckSvg from '../../../../Svg/CheckSvg';
+import LabelCheckBox from '../LabelCheckBox/LabelCheckBox';
 import * as Styled from './styled';
 import { useState } from 'react';
 
@@ -22,25 +22,25 @@ const ContinuationFormReq = ({ setClickEnter }: ContinuationFormReqProps) => {
     <Styled.WrapperAllContainerPasswordLow>
       <Styled.ContainerMainCheckAndRecoverPassword>
         <Styled.ContainerCheckbox onClick={handleClickLabel}>
-          <Styled.Label $activelabel={String(activeLabel)}>
-            {activeLabel && <CheckSvg />}
-          </Styled.Label>
+          <LabelCheckBox activeLabel={activeLabel} />
         </Styled.ContainerCheckbox>
         <Styled.Span $span="2">Mantenha-me conhectado</Styled.Span>
         <Styled.Span $span="3">Esqueceu a senha?</Styled.Span>
       </Styled.ContainerMainCheckAndRecoverPassword>
       <Styled.ContainerFollowStep>
-        <Styled.Span $span="4">
-          Perdeu acesso ao e-mail cadastrado?{' '}
+        <p>
+          <Styled.Span $span="4">Perdeu acesso ao e-mail cadastrado?</Styled.Span>
           <Styled.Span $span="5">Siga o passo a passo</Styled.Span>
-        </Styled.Span>
+        </p>
       </Styled.ContainerFollowStep>
       <Styled.ContainerReCAPTCHA>
-        <Styled.Span $span="6">
-          Este site é protegido pelo reCAPTCHA e pelo Google aplicando as seguintes
-          <Styled.Span $span="7"> Políticas de Segurança</Styled.Span> e
-          <Styled.Span $span="7"> Termos de Serviço.</Styled.Span>
-        </Styled.Span>
+        <p>
+          <Styled.Span $span="6">
+            Este site é protegido pelo reCAPTCHA e pelo Google aplicando as seguintes
+          </Styled.Span>
+          <Styled.Span $span="7">Políticas de Segurança</Styled.Span> e
+          <Styled.Span $span="7">Termos de Serviço.</Styled.Span>
+        </p>
       </Styled.ContainerReCAPTCHA>
       <Styled.ContainerButton>
         <Styled.Button onClick={handleClickEnter}>Entrar</Styled.Button>

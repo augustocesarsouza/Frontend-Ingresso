@@ -6,9 +6,11 @@ import Button from '../Button/Button';
 
 interface CepProps {
   setUseLocationData: React.Dispatch<React.SetStateAction<CEP>>;
+  setCep: React.Dispatch<React.SetStateAction<string>>;
+  cepp: string;
 }
 
-const Cep = ({ setUseLocationData }: CepProps) => {
+const Cep = ({ setUseLocationData, setCep, cepp }: CepProps) => {
   const [numberYes, setNumberYes] = useState(false);
   const [FocusOrBlur, setFocusOrBlur] = useState(false);
   const [backspacePress, setBackspacePress] = useState(false);
@@ -20,6 +22,23 @@ const Cep = ({ setUseLocationData }: CepProps) => {
   const [cursorPositionIndexDelete, setCursorPositionIndexDelete] = useState(0);
   const [errorWhenConsultingCpf, setErrorWhenConsultingCpf] = useState(true);
   const refInput = useRef<HTMLInputElement | null>(null);
+  const [typeInputCpf, setTypeInputCpf] = useState(false);
+
+  useEffect(() => {
+    const valueInputCpf = refInput.current.value;
+    let arrayString = [];
+    for (let i = 0; i < valueInputCpf.length; i++) {
+      if (!isNaN(Number(valueInputCpf[i]))) {
+        arrayString.push(valueInputCpf[i]);
+      }
+    }
+    const joinString = arrayString.join('');
+    if (joinString.length === 8) {
+      setCep(joinString);
+    } else {
+      setCep('');
+    }
+  }, [refInput.current, typeInputCpf]);
 
   const handleCLick = (e: KeyboardEvent) => {
     if (e.key === 'Backspace') {
@@ -45,6 +64,7 @@ const Cep = ({ setUseLocationData }: CepProps) => {
   }, []);
 
   const handleChangeInput = () => {
+    setTypeInputCpf((prev) => !prev);
     if (backspacePress) {
       const firstUnderscoreIndex = hasValueInput.indexOf('_');
 
@@ -184,6 +204,11 @@ const Cep = ({ setUseLocationData }: CepProps) => {
       setUseLocationData(dataLocationObj);
     }
   };
+
+  useEffect(() => {
+    if (cepp.length <= 0) return;
+    setHasValueInput(cepp);
+  }, [cepp]);
 
   return (
     <Styled.ContainerYourWarning>

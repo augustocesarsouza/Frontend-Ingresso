@@ -3,7 +3,15 @@ import EmailAndConfirmEmail from './EmailAndConfirmEmail';
 
 describe('EmailAndConfirmEmail', () => {
   test('should render input email', () => {
-    const { container } = render(<EmailAndConfirmEmail />);
+    const fn = jest.fn();
+    const { container } = render(
+      <EmailAndConfirmEmail
+        setValueOfEmail={fn}
+        setValueOfEmailConfirm={fn}
+        setVerifyFields={fn}
+        verifyFields={false}
+      />
+    );
 
     const spanElement = container.querySelector('#input-email');
     expect(spanElement).toBeInTheDocument();
@@ -11,14 +19,30 @@ describe('EmailAndConfirmEmail', () => {
   EmailAndConfirmEmail;
 
   test('should render input confirm email', () => {
-    const { container } = render(<EmailAndConfirmEmail />);
+    const fn = jest.fn();
+    const { container } = render(
+      <EmailAndConfirmEmail
+        setValueOfEmail={fn}
+        setValueOfEmailConfirm={fn}
+        setVerifyFields={fn}
+        verifyFields={false}
+      />
+    );
 
     const spanElement = container.querySelector('#input-confirm-email');
     expect(spanElement).toBeInTheDocument();
   });
 
   test('Snapshot', () => {
-    const { container } = render(<EmailAndConfirmEmail />);
+    const fn = jest.fn();
+    const { container } = render(
+      <EmailAndConfirmEmail
+        setValueOfEmail={fn}
+        setValueOfEmailConfirm={fn}
+        setVerifyFields={fn}
+        verifyFields={false}
+      />
+    );
 
     expect(container).toMatchSnapshot();
   });

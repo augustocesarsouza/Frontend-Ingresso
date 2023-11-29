@@ -6,9 +6,14 @@ export const ContainerMainDateBirthday = styled.div`
   margin-top: 10px;
 `
 
-export const ContainerSelect = styled.div`
+interface ContainerSelectProps {
+  $whatcomponentimrendering: string;
+}
+
+export const ContainerSelect = styled.div<ContainerSelectProps>`
   display: flex;
   width: 19rem;
+  width: ${props => props.$whatcomponentimrendering === "alreadyLogged" && "11rem"};
 `
 
 export const Select = styled.select`

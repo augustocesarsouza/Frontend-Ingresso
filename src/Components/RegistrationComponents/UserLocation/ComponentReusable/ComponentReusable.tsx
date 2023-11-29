@@ -5,9 +5,19 @@ interface ComponentReusableProps {
   text: string;
   width: string;
   inputData: string;
+  setStateDado: React.Dispatch<React.SetStateAction<string>>;
+  whatComponentImRendering: string;
+  valueInfoUser: string;
 }
 
-const ComponentReusable = ({ text, width = '50', inputData }: ComponentReusableProps) => {
+const ComponentReusable = ({
+  text,
+  width = '50',
+  inputData,
+  setStateDado,
+  whatComponentImRendering,
+  valueInfoUser,
+}: ComponentReusableProps) => {
   const [FocusOrBlur, setFocusOrBlur] = useState(false);
   const [hasValueInputName, setHasValueInputName] = useState(false);
   const [valueInput, setValueInput] = useState('');
@@ -42,14 +52,29 @@ const ComponentReusable = ({ text, width = '50', inputData }: ComponentReusableP
     setFocusOrBlur(false);
   };
 
+  useEffect(() => {
+    setStateDado(valueInput);
+  }, [valueInput]);
+
+  useEffect(() => {
+    if (valueInfoUser.length > 0) {
+      setValueInput(valueInfoUser);
+      setHasValueInputName(true);
+    }
+  }, [valueInfoUser]);
+
   return (
-    <Styled.ContainerWarning $width={width} id="container-warning">
+    <Styled.ContainerWarning
+      $width={width}
+      id="container-warning"
+      $whatcomponentimrendering={whatComponentImRendering}
+    >
       <Styled.ContainerAllColors $focusorblur={String(FocusOrBlur)}>
         <Styled.SpanName $hasvalueinputname={String(hasValueInputName)}>{text}</Styled.SpanName>
         <Styled.Input
           type="text"
           id={`input-${text.toLowerCase()}`}
-          value={valueInput}
+          value={valueInfoUser.length > 0 ? valueInfoUser : valueInput}
           $blocktype={String(blockType)}
           onChange={handleChangeInputName}
           $hasvalueinputname={String(hasValueInputName)}

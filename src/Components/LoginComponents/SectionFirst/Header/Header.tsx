@@ -1,9 +1,13 @@
 import * as Styled from './styled';
 
-const Header = () => {
+interface HeaderProps {
+  text: string;
+}
+
+const Header = ({ text }: HeaderProps) => {
   return (
     <Styled.HeaderContainer>
-      <Styled.H1>Entrar como cliente Ingresso.com</Styled.H1>
+      <Styled.H1>{text}</Styled.H1>
     </Styled.HeaderContainer>
   );
 };

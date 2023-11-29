@@ -4,12 +4,31 @@ interface DayMonthProps {
   SelectDayOfMonthRef: React.MutableRefObject<HTMLSelectElement>;
   handleCLickOption: () => void;
   dayMes: [] | number[];
+  whatComponentImRendering: string;
+  valueDay: number;
+  setValueDay: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const DayMonth = ({ SelectDayOfMonthRef, handleCLickOption, dayMes }: DayMonthProps) => {
+const DayMonth = ({
+  SelectDayOfMonthRef,
+  handleCLickOption,
+  dayMes,
+  whatComponentImRendering,
+  valueDay,
+  setValueDay,
+}: DayMonthProps) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setValueDay(Number(e.target.value));
+  };
+
   return (
-    <Styled.ContainerSelect>
-      <Styled.Select ref={SelectDayOfMonthRef} onClick={handleCLickOption}>
+    <Styled.ContainerSelect $whatcomponentimrendering={whatComponentImRendering}>
+      <Styled.Select
+        ref={SelectDayOfMonthRef}
+        onClick={handleCLickOption}
+        value={valueDay}
+        onChange={(e) => handleChange(e)}
+      >
         {dayMes.length > 0 ? (
           <>
             {dayMes.map((number) => (

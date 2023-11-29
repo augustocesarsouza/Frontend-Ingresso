@@ -3,7 +3,8 @@ import BirthdayAndGender from './BirthdayAndGender';
 
 describe('BirthdayAndGender', () => {
   test('should render every month', () => {
-    render(<BirthdayAndGender />);
+    const fn = jest.fn();
+    render(<BirthdayAndGender setBirthday={fn} setGender={fn} />);
 
     const optionFirst = screen.getByRole('option', { name: 'Mês de aniversário' });
     const january = screen.getByRole('option', { name: 'Janeiro' });
@@ -37,7 +38,8 @@ describe('BirthdayAndGender', () => {
   });
 
   test('should render option gender', () => {
-    render(<BirthdayAndGender />);
+    const fn = jest.fn();
+    render(<BirthdayAndGender setBirthday={fn} setGender={fn} />);
 
     const optionFirst = screen.getByRole('option', { name: 'Prefiro não informar' });
     const female = screen.getByRole('option', { name: 'Feminino' });

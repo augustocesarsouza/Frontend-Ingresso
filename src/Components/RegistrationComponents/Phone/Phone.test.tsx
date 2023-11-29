@@ -3,7 +3,9 @@ import Phone from './Phone';
 
 describe('Phone', () => {
   test('should render input and span', () => {
-    const { container } = render(<Phone />);
+    const fn = jest.fn();
+    Phone;
+    const { container } = render(<Phone setPhoneInfo={fn} setNumber={fn} number="" phoneInfo="" />);
 
     const input = container.querySelector('#input-phone');
     expect(input).toBeInTheDocument();

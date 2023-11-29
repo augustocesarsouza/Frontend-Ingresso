@@ -83,6 +83,7 @@ exports[`EmailAndConfirmEmail Snapshot 1`] = `
             class="styled__CredentialIcon-btCXJl kuwuSY"
           >
             <svg
+              class="svg-email"
               role="img"
               viewBox="0 0 32 33"
               xmlns="http://www.w3.org/2000/svg"
@@ -119,6 +120,7 @@ exports[`EmailAndConfirmEmail Snapshot 1`] = `
             class="styled__CredentialIcon-btCXJl kuwuSY"
           >
             <svg
+              class="svg-email"
               role="img"
               viewBox="0 0 32 33"
               xmlns="http://www.w3.org/2000/svg"

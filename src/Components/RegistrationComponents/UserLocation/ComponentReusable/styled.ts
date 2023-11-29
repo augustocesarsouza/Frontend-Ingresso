@@ -2,12 +2,14 @@ import styled from 'styled-components';
 
 interface ContainerWarningProps {
   $width: string;
+  $whatcomponentimrendering: string;
 }
 
 export const ContainerWarning = styled.div<ContainerWarningProps>`
   display: flex;
   flex-direction: column;
   width: ${props => `${props.$width}%`};
+  width: ${props => props.$whatcomponentimrendering === "alreadyLogged" && "30%"};
 `
 
 interface ContainerAllColorsProps {
@@ -54,6 +56,7 @@ export const Input = styled.input<InputProps>`
   padding-top: ${props => props.$hasvalueinputname === "true" && "18px"};
   padding-left: ${props => props.$hasvalueinputname === "true" && "17px"};
   padding-bottom: ${props => props.$hasvalueinputname === "true" && "8px"};
+  padding-right: ${props => props.$hasvalueinputname === "true" && "10px"};
   
   pointer-events: ${props => props.$blocktype === "true" && "none"};
   

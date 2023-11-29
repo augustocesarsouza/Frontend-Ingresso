@@ -8,8 +8,8 @@ export const ContainerMain = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  
   gap: 55px;
-
 `;
 
 export const ContainerInternal = styled.div`
@@ -40,14 +40,7 @@ export const Section = styled.section<SectionProps>`
   gap: ${props => props.$section === "2" && "20px"};
 `
 
-export const Header = styled.header``
-
 export const ContainerCreateNewAccount = styled.div``
-
-export const H1 = styled.h1`
-  font-size: 21px;
-  color: rgb(102, 102, 102);
-`
 
 export const p = styled.p`
   color: rgb(118, 118, 118);

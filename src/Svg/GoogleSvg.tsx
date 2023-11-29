@@ -1,6 +1,13 @@
 const GoogleSvg = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 23 23" role="img">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="26"
+      height="26"
+      viewBox="0 0 23 23"
+      role="img"
+      className="svg-google"
+    >
       <g fill="none" fillRule="evenodd">
         <rect width="26" height="26" fill="#FFF" rx="1"></rect>
         <path

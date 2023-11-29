@@ -8,7 +8,8 @@ export const ContainerMain = styled.div`
 
 export const ContainerFirst = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 15px;
+  margin-right: 10px;
 `
 
 

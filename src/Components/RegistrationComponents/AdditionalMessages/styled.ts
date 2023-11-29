@@ -66,6 +66,9 @@ export const p = styled.p<pProps>`
   font-size: ${props => props.$para === "3" && "12px"};
   margin-top: ${props => props.$para === "3" && "30px"};
   margin-top: ${props => props.$para === "4" && "20px"};
+
+  color: ${props => props.$para === "5" && "gray"};
+  font-size: ${props => props.$para === "5" && "12px"};
 `
 
 interface SpanProps {
@@ -82,5 +85,5 @@ export const Span = styled.span<SpanProps>`
     color: ${props => props.$span === "2" && "#2587d5c9"};
   }
 `
-
 export const ContainerRecaptcha = styled.div``
+

@@ -5,11 +5,45 @@ import { useRef, useEffect, useState } from 'react';
 
 interface UserLocationDataProps {
   useLocationData: CEP;
+  setLogradouro: React.Dispatch<React.SetStateAction<string>>;
+  setNumero: React.Dispatch<React.SetStateAction<string>>;
+  setComplemento: React.Dispatch<React.SetStateAction<string>>;
+  setReferencia: React.Dispatch<React.SetStateAction<string>>;
+  setBairro: React.Dispatch<React.SetStateAction<string>>;
+  setEstado: React.Dispatch<React.SetStateAction<string>>;
+  setCidade: React.Dispatch<React.SetStateAction<string>>;
+  logradouro: string;
+  numero: string;
+  complemento: string;
+  referencia: string;
+  bairro: string;
+  estado: string;
+  cidade: string;
+  whatComponentImRendering: string;
 }
 
-const UserLocationData = ({ useLocationData }: UserLocationDataProps) => {
+const UserLocationData = ({
+  useLocationData,
+  setLogradouro,
+  setNumero,
+  setComplemento,
+  setReferencia,
+  setBairro,
+  setEstado,
+  setCidade,
+  logradouro,
+  numero,
+  complemento,
+  referencia,
+  bairro,
+  estado,
+  cidade,
+  whatComponentImRendering,
+}: UserLocationDataProps) => {
   const SelectRef = useRef<HTMLSelectElement | null>(null);
   const [blockType, setBlockType] = useState(false);
+  const [clickSelect, setClickSelect] = useState(false);
+  const [valueYear, setValueYear] = useState('');
 
   useEffect(() => {
     if (useLocationData !== null) {
@@ -20,6 +54,26 @@ const UserLocationData = ({ useLocationData }: UserLocationDataProps) => {
     }
   }, [useLocationData]);
 
+  useEffect(() => {
+    if (SelectRef.current.value === 'Estado') {
+      setEstado('');
+    } else {
+      setEstado(SelectRef.current.value);
+    }
+  }, [SelectRef.current, clickSelect, blockType]);
+
+  const handleClickSelect = () => {
+    setClickSelect((prev) => !prev);
+  };
+
+  useEffect(() => {
+    setValueYear(estado);
+  }, [estado]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setValueYear(e.target.value);
+  };
+
   return (
     <Styled.ContainerMain>
       <Styled.ContainerFirst>
@@ -27,19 +81,51 @@ const UserLocationData = ({ useLocationData }: UserLocationDataProps) => {
           text="Logradouro"
           width="50"
           inputData={useLocationData !== null ? useLocationData.street : ''}
+          setStateDado={setLogradouro}
+          valueInfoUser={logradouro}
+          whatComponentImRendering={whatComponentImRendering}
         />
-        <ComponentReusable text="Número" width="20" inputData="" />
-        <ComponentReusable text="Complemento" width="30" inputData="" />
-        <ComponentReusable text="Referência" width="30" inputData="" />
+        <ComponentReusable
+          text="Número"
+          width="20"
+          inputData=""
+          setStateDado={setNumero}
+          valueInfoUser={numero}
+          whatComponentImRendering={whatComponentImRendering}
+        />
+        <ComponentReusable
+          text="Complemento"
+          width="30"
+          inputData=""
+          setStateDado={setComplemento}
+          valueInfoUser={complemento}
+          whatComponentImRendering={whatComponentImRendering}
+        />
+        <ComponentReusable
+          text="Referência"
+          width="30"
+          inputData=""
+          setStateDado={setReferencia}
+          valueInfoUser={referencia}
+          whatComponentImRendering={whatComponentImRendering}
+        />
       </Styled.ContainerFirst>
       <Styled.ContainerFirst>
         <ComponentReusable
           text="Bairro"
           width="50"
           inputData={useLocationData !== null ? useLocationData.neighborhood : ''}
+          setStateDado={setBairro}
+          valueInfoUser={bairro}
+          whatComponentImRendering={whatComponentImRendering}
         />
-        <Styled.ContainerSelect>
-          <Styled.Select ref={SelectRef} $blocktype={String(blockType)}>
+        <Styled.ContainerSelect onClick={handleClickSelect}>
+          <Styled.Select
+            ref={SelectRef}
+            $blocktype={String(blockType)}
+            value={valueYear}
+            onChange={(e) => handleChange(e)}
+          >
             <Styled.Option>Estado</Styled.Option>
             <Styled.Option>AC</Styled.Option>
             <Styled.Option>AL</Styled.Option>
@@ -74,6 +160,9 @@ const UserLocationData = ({ useLocationData }: UserLocationDataProps) => {
           text="Cidade"
           width="30"
           inputData={useLocationData !== null ? useLocationData.city : ''}
+          setStateDado={setCidade}
+          valueInfoUser={cidade}
+          whatComponentImRendering={whatComponentImRendering}
         />
       </Styled.ContainerFirst>
     </Styled.ContainerMain>

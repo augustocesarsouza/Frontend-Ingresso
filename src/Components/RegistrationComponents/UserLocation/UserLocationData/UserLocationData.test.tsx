@@ -18,8 +18,28 @@ describe('UserLocationData', () => {
       neighborhood: '',
       service: '',
     };
+    const fn = jest.fn();
 
-    const { container } = render(<UserLocationData useLocationData={useLocationDataObj} />);
+    const { container } = render(
+      <UserLocationData
+        useLocationData={useLocationDataObj}
+        setBairro={fn}
+        setCidade={fn}
+        setComplemento={fn}
+        setEstado={fn}
+        setLogradouro={fn}
+        setNumero={fn}
+        setReferencia={fn}
+        bairro=""
+        cidade=""
+        complemento=""
+        estado=""
+        logradouro=""
+        numero=""
+        referencia=""
+        whatComponentImRendering=""
+      />
+    );
 
     const spanLogra = screen.getByText('Logradouro');
     expect(spanLogra).toBeInTheDocument();
@@ -46,6 +66,8 @@ describe('UserLocationData', () => {
   });
 
   test('should render passing obj useLocationDataObj', () => {
+    const fn = jest.fn();
+
     const useLocationDataObj = {
       cep: '',
       state: 'MS',
@@ -55,7 +77,26 @@ describe('UserLocationData', () => {
       service: '',
     };
 
-    render(<UserLocationData useLocationData={useLocationDataObj} />);
+    render(
+      <UserLocationData
+        useLocationData={useLocationDataObj}
+        setBairro={fn}
+        setCidade={fn}
+        setComplemento={fn}
+        setEstado={fn}
+        setLogradouro={fn}
+        setNumero={fn}
+        setReferencia={fn}
+        bairro=""
+        cidade=""
+        complemento=""
+        estado=""
+        logradouro=""
+        numero=""
+        referencia=""
+        whatComponentImRendering=""
+      />
+    );
   });
 
   //Testar se passar dados "useLocationDataObj"

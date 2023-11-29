@@ -6,8 +6,17 @@ describe('ComponentReusable', () => {
     const text = 'Logradouro';
     const width = '50';
     const inputData = 'Rua Cajazeira';
+    const fn = jest.fn();
+
     const { container } = render(
-      <ComponentReusable text={text} width={width} inputData={inputData} />
+      <ComponentReusable
+        text={text}
+        width={width}
+        inputData={inputData}
+        setStateDado={fn}
+        whatComponentImRendering=""
+        valueInfoUser=""
+      />
     );
 
     const span = screen.getByText('Logradouro');

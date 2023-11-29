@@ -4,7 +4,7 @@ import Cep from './Cep';
 describe('Cep', () => {
   test('should render span input button', () => {
     const fn = jest.fn();
-    const { container } = render(<Cep setUseLocationData={fn} />);
+    const { container } = render(<Cep setUseLocationData={fn} setCep={fn} cepp="" />);
 
     const span = screen.getByText('CEP');
     expect(span).toBeInTheDocument();
@@ -12,16 +12,6 @@ describe('Cep', () => {
     const input = container.querySelector('#input-cep');
     expect(input).toBeInTheDocument();
 
-    const button = screen.getByRole('button', { name: 'OK' });
-    expect(button).toBeInTheDocument();
-
-    expect.assertions(3);
-  });
-
-  test('should render click', () => {
-    const fn = jest.fn();
-    const { container } = render(<Cep setUseLocationData={fn} />);
-
-    const button = screen.getByRole('button', { name: 'OK' });
+    expect.assertions(2);
   });
 });

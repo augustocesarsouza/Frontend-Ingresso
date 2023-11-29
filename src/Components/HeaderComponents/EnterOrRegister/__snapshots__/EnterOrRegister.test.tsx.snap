@@ -69,6 +69,7 @@ exports[`EnterOrRegister should matchSnapshot 1`] = `
 .c8 {
   color: #2196f3;
   font-size: 15px;
+  cursor: pointer;
 }
 
 <div>

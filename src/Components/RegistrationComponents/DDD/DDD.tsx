@@ -1,7 +1,14 @@
 import * as Styled from './styled';
 import { useState, useEffect, useRef } from 'react';
 
-const DDD = () => {
+interface DDDProps {
+  setDDDInfo: React.Dispatch<React.SetStateAction<string>>;
+  dddInfo: string;
+  dd: string;
+  setDD: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const DDD = ({ setDDDInfo, dddInfo, dd, setDD }: DDDProps) => {
   const [numberYes, setNumberYes] = useState(false);
   const [FocusOrBlur, setFocusOrBlur] = useState(false);
   const [backspacePress, setBackspacePress] = useState(false);
@@ -12,6 +19,24 @@ const DDD = () => {
   const [cursorPositionIndex, setCursorPositionIndex] = useState(0);
   const [cursorPositionIndexDelete, setCursorPositionIndexDelete] = useState(0);
   const refInput = useRef<HTMLInputElement | null>(null);
+  const [typeInputDDD, setTypeInputDDD] = useState(false);
+
+  useEffect(() => {
+    let valueInputDDD = refInput.current.value;
+
+    let arrayString = [];
+    for (let i = 0; i < valueInputDDD.length; i++) {
+      if (!isNaN(Number(valueInputDDD[i]))) {
+        arrayString.push(valueInputDDD[i]);
+      }
+    }
+    const joinString = arrayString.join('');
+    if (joinString.length === 2) {
+      setDDDInfo(joinString);
+    } else {
+      setDDDInfo('');
+    }
+  }, [refInput.current, typeInputDDD]);
 
   const handleCLick = (e: KeyboardEvent) => {
     if (e.key === 'Backspace') {
@@ -22,6 +47,7 @@ const DDD = () => {
 
     if (!isNaN(Number(e.key))) {
       setValueNumber(e.key);
+
       setNumberYes(true);
       setCursorPositionIndex(0);
     } else {
@@ -37,7 +63,8 @@ const DDD = () => {
     };
   }, []);
 
-  const handleChangeInput = () => {
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTypeInputDDD((prev) => !prev);
     if (backspacePress) {
       const firstUnderscoreIndex = hasValueInput.indexOf('_');
 
@@ -73,6 +100,7 @@ const DDD = () => {
         if (char === '_' && !replaced) {
           replaced = true;
           cursorPosition = index + 1;
+          // setDD(valueNumber);
           return valueNumber;
         } else {
           return char;
@@ -126,6 +154,27 @@ const DDD = () => {
       refInput.current.setSelectionRange(firstUnderscoreIndex, firstUnderscoreIndex);
     }
   };
+
+  useEffect(() => {
+    if (dddInfo.length <= 0) return;
+    setHasValueInput(dddInfo);
+  }, [dddInfo]);
+
+  const numberCount = useRef<number>(0);
+
+  useEffect(() => {
+    if (dd.length <= 0 || numberCount.current > 0) return;
+
+    setHasValueInputName(true);
+    setHasValueInput(dd);
+    numberCount.current++;
+  }, [dd]);
+
+  useEffect(() => {
+    if (!hasValueInput.includes('_')) {
+      setDD(hasValueInput);
+    }
+  }, [hasValueInput]);
 
   return (
     <Styled.ContainerYourWarning>
