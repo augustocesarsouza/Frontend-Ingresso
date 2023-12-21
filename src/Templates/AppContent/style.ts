@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 
-export const ContainerMain = styled.div`
+interface ContainerMainProps {
+  $ishome: string;
+  $isfilm: string;
+}
+
+export const ContainerMain = styled.div<ContainerMainProps>`
   position: relative;
   /* height: 100vh; */
   /* overflow-y: hidden; */
   width: 100%;
-  /* height: 100vh; */
+  background: ${props => props.$ishome === "true" ? "#4e4b4b" :  "white"};
+  background: ${props => props.$isfilm === "true" && "#4c4c4c"};
 `

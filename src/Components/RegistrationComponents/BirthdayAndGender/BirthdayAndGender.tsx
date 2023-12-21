@@ -1,7 +1,7 @@
 import { getDaysInMonth, getMonth, parse, eachYearOfInterval, format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import * as Styled from './styled';
 import { useState, useEffect, useRef } from 'react';
-import { ptBR } from 'date-fns/locale';
 import DayMonth from '../DayMonth/DayMonth';
 
 interface BirthdayAndGenderProps {

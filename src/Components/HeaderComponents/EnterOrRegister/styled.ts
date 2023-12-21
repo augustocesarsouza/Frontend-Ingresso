@@ -9,6 +9,7 @@ export const ContainerEnterOrRegisterMain = styled.div`
   height: 26rem;
   display: flex;
   padding: 30px 10px;
+  z-index: 9999;
 
   svg {
     position: relative;

@@ -32,3 +32,11 @@ export const Li = styled.li`
     color: rgb(187 200 255 / 73%);
   }
 `
+
+export const ContainerTrendingDown = styled.div`
+  /* height: 100vh; // tirar isso depois qq coisa */
+`
+
+export const ContainerSection = styled.div`
+  padding: 0px 10px 0px 10px;
+`

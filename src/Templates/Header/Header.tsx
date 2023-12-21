@@ -1,12 +1,38 @@
 import FirstContainer from '../../Components/HeaderComponents/FirstContainer/FirstContainer';
 import SecondContainer from '../../Components/HeaderComponents/SecondContainer/SecondContainer';
+import HighlightContent from '../../Components/MainPageAllContentsComponents/HighlightContent/HighlightContent';
 import * as Styled from './styled';
+import TrendingBannerMovie from '../../Components/HeaderComponents/TrendingBannerMovie/TrendingBannerMovie';
+import TheatresBanner from '../../Components/HeaderComponents/TheatresBanner/TheatresBanner';
+import { useState } from 'react';
 
 const Header = () => {
+  const [mouseEnterContainerChooseLocation, setMouseEnterContainerChooseLocation] = useState(false);
+  const [openChooseLocation, setOpenChooseLocation] = useState(false);
+
+  const handleClickMainContainer = () => {
+    if (openChooseLocation && !mouseEnterContainerChooseLocation) {
+      setOpenChooseLocation(false);
+    }
+  };
+
+  const handleMouseEnter = () => {
+    setMouseEnterContainerChooseLocation(true);
+  };
+
+  const handleMouseLeave = () => {
+    setMouseEnterContainerChooseLocation(false);
+  };
+
   return (
-    <Styled.ContainerMain>
+    <Styled.ContainerMain onClick={handleClickMainContainer}>
       <Styled.ContainerFirstHeader>
-        <FirstContainer />
+        <FirstContainer
+          openChooseLocation={openChooseLocation}
+          setOpenChooseLocation={setOpenChooseLocation}
+          handleMouseEnter={handleMouseEnter}
+          handleMouseLeave={handleMouseLeave}
+        />
         <SecondContainer />
       </Styled.ContainerFirstHeader>
       <Styled.ContainerSecondHeader>
@@ -19,6 +45,13 @@ const Header = () => {
           </Styled.Ul>
         </Styled.NavHeader>
       </Styled.ContainerSecondHeader>
+      <HighlightContent />
+      <Styled.ContainerTrendingDown>
+        <Styled.ContainerSection>
+          <TrendingBannerMovie />
+          <TheatresBanner />
+        </Styled.ContainerSection>
+      </Styled.ContainerTrendingDown>
     </Styled.ContainerMain>
   );
 };

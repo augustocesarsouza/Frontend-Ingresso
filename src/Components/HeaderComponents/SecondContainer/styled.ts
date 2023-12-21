@@ -64,6 +64,8 @@ export const ContainerNavMainUser = styled.div`
   height: 30rem;
   display: flex;
   padding: 24px 0px;
+  z-index: 9999;
+
 
   svg {
     position: relative;

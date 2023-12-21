@@ -13,12 +13,17 @@ const SecondContainer = () => {
   const [enterOrRegister, setEnterOrRegister] = useState(false);
   const [enterMouseDivUserImgSvg, setEnterMouseDivUserImgSvg] = useState(false);
   const [userName, setUserName] = useState('');
+  const [openInfoUser, setOpenInfoUser] = useState(false);
   const nav = useNavigate();
 
   const useContextHome = useContext<ContextHomeProps | null>(ContextHome);
 
   const handleEnterOrRegister = () => {
-    setEnterOrRegister((prev) => !prev);
+    if (userName.length <= 0) {
+      setEnterOrRegister((prev) => !prev);
+    } else {
+      setOpenInfoUser((prev) => !prev);
+    }
   };
 
   const documentEvent = () => {
@@ -35,7 +40,7 @@ const SecondContainer = () => {
   }, [enterMouseDivUserImgSvg]);
 
   useEffect(() => {
-    if (useContextHome.userObj === null) return;
+    if (useContextHome.userObj === null || useContextHome.userObj === undefined) return;
 
     const {
       userObj: { name },
@@ -50,8 +55,6 @@ const SecondContainer = () => {
   const handleLeave = () => {
     setEnterMouseDivUserImgSvg(false);
   };
-
-  const [openInfoUser, setOpenInfoUser] = useState(false);
 
   const handleClickUserName = () => {
     setOpenInfoUser((prev) => !prev);
@@ -89,6 +92,7 @@ const SecondContainer = () => {
           handleClickUserName={handleClickUserName}
         />
         <EnterOrRegister enterOrRegister={enterOrRegister} />
+
         {openInfoUser && (
           <Styled.ContainerNavMainUser>
             <FontAwesomeIcon icon={faCaretUp} />

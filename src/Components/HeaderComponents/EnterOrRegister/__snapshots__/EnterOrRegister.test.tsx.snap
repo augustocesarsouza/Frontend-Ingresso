@@ -10,6 +10,7 @@ exports[`EnterOrRegister should matchSnapshot 1`] = `
   height: 26rem;
   display: flex;
   padding: 30px 10px;
+  z-index: 9999;
 }
 
 .c0 svg {
