@@ -69,6 +69,7 @@ const SelectCinema = () => {
   };
 
   const [next7Days, setNext7Days] = useState<next7DaysProps[]>([]);
+  const [weekDay, setWeekDay] = useState('');
 
   useEffect(() => {
     if (next7Days.length > 0) return;
@@ -86,6 +87,8 @@ const SelectCinema = () => {
       const formattedMonth = format(day, 'MM', { locale: ptBR });
 
       if (dayToday === Number(formattedDay)) {
+        setWeekDay(weekDay);
+
         const objData = {
           dayYear: `${formattedDay}/${formattedMonth}`,
           weekDay: 'Hoje',
@@ -104,6 +107,12 @@ const SelectCinema = () => {
   }, []);
 
   const [rankingMovieList, setRankingMovieList] = useState<string[]>([]);
+  const [dataSelected, setDataSelected] = useState<next7DaysProps | null>(null);
+
+  useEffect(() => {
+    if (next7Days === null) return;
+    setDataSelected(next7Days[0]);
+  }, [next7Days]);
 
   return (
     <Styled.ContainerMain onClick={handleClickMainContainer}>
@@ -146,10 +155,16 @@ const SelectCinema = () => {
       )}
       <Styled.ContainerChooseRoom>
         <SessionsAndAboutTheFilm />
-        <DateForFilm next7Days={next7Days} />
+        <DateForFilm next7Days={next7Days} setDataSelected={setDataSelected} />
         <RankingMovie setRankingMovieList={setRankingMovieList} />
 
-        <LocationMovie movieSelected={movieSelected} rankingMovieList={rankingMovieList} />
+        <LocationMovie
+          movieSelected={movieSelected}
+          rankingMovieList={rankingMovieList}
+          dataSelected={dataSelected}
+          weekDay={weekDay}
+          userObj={userObj}
+        />
       </Styled.ContainerChooseRoom>
     </Styled.ContainerMain>
   );

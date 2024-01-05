@@ -1680,6 +1680,11 @@ exports[`Registration should matchSnapshot 1`] = `
                 >
                   2023
                 </option>
+                <option
+                  class=""
+                >
+                  2024
+                </option>
               </select>
             </div>
             <div

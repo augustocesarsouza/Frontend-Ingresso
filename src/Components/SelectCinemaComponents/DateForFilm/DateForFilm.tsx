@@ -4,12 +4,15 @@ import { next7DaysProps } from '../SelectCinema/SelectCinema';
 
 interface DateForFilmProps {
   next7Days: next7DaysProps[];
+  setDataSelected: React.Dispatch<React.SetStateAction<next7DaysProps>>;
 }
 
-const DateForFilm = ({ next7Days }: DateForFilmProps) => {
+const DateForFilm = ({ next7Days, setDataSelected }: DateForFilmProps) => {
   const [clickIn, setClickIn] = useState('0');
 
-  const handleClickDate = (day: string) => {
+  const handleClickDate = (day: string, data: next7DaysProps) => {
+    setDataSelected(data);
+
     setClickIn(day);
   };
 
@@ -17,7 +20,10 @@ const DateForFilm = ({ next7Days }: DateForFilmProps) => {
     <Styled.ContainerDataMovieMain>
       {next7Days.length > 0 &&
         next7Days.map((day, index) => (
-          <Styled.ContainerDataMovie onClick={() => handleClickDate(String(index))} key={index}>
+          <Styled.ContainerDataMovie
+            onClick={() => handleClickDate(String(index), day)}
+            key={index}
+          >
             <Styled.Span $span={String(index)} $clickin={String(clickIn)}>
               {day.dayYear}
             </Styled.Span>

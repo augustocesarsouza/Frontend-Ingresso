@@ -1,12 +1,13 @@
+import { useNavigate } from 'react-router-dom';
 import { Url } from '../../../../Utils/Url';
-import { movieSelectedProps } from '../../SelectCinema/SelectCinema';
+import { movieSelectedProps, next7DaysProps } from '../../SelectCinema/SelectCinema';
 import InfoMovieLocalSeatsPriceDetails from '../InfoMovieLocalSeatsPriceDetails/InfoMovieLocalSeatsPriceDetails';
-import RankingDublado from '../RankingDublado/RankingDublado';
-import RankingLegenda from '../RankingLegenda/RankingLegenda';
+import Ranking from '../Ranking/Ranking';
 import RankingLegendaVip from '../RankingLegendaVip/RankingLegendaVip';
 import RankingLegendaVipSecond from '../RankingLegendaVipSecond/RankingLegendaVipSecond';
 import * as Styled from './styled';
-import { useState, useEffect, memo } from 'react';
+import { useState, useEffect } from 'react';
+import { ObjUser } from '../../../LoginComponents/SectionFirst/Form/Form';
 
 export interface cinemaMovieProps {
   cinemaDTO: CinemaDTO;
@@ -15,6 +16,8 @@ export interface cinemaMovieProps {
   IsOnlyLegImax: number;
   IsOnlyDubVip: number;
   IsOnlyDubImax: number;
+  IsOnlyDubLeg: number;
+  IsOnlyLegVipImax: number;
 }
 
 interface CinemaDTO {
@@ -26,10 +29,20 @@ interface CinemaDTO {
 interface LocationMovieProps {
   movieSelected: movieSelectedProps;
   rankingMovieList: string[];
+  dataSelected: next7DaysProps;
+  weekDay: string;
+  userObj: ObjUser;
 }
 
-const LocationMovie = ({ movieSelected, rankingMovieList }: LocationMovieProps) => {
+const LocationMovie = ({
+  movieSelected,
+  rankingMovieList,
+  dataSelected,
+  weekDay,
+  userObj,
+}: LocationMovieProps) => {
   const [cinemaMovie, setCinemaMovie] = useState<cinemaMovieProps[] | null>(null);
+  const nav = useNavigate();
 
   useEffect(() => {
     if (movieSelected === null) return;
@@ -78,80 +91,56 @@ const LocationMovie = ({ movieSelected, rankingMovieList }: LocationMovieProps) 
   useEffect(() => {
     if (cinemaMovie === null) return;
 
-    if (rankingMovieList.length >= 2) {
-      const stringJoin = rankingMovieList.join();
+    const rankingMap = {
+      'DUBLADO,LEGENDADO': 'IsOnlyDubLeg',
+      'LEGENDADO,VIP': 'IsOnlyLegVip',
+      'LEGENDADO,IMAX': 'IsOnlyLegImax',
+      'DUBLADO,VIP': 'IsOnlyDubVip',
+      'DUBLADO,IMAX': 'IsOnlyDubImax',
+      'LEGENDADO,VIP,IMAX': 'IsOnlyLegVipImax',
+    };
 
-      // let listString = cinemaMovie.filter((mov) => mov.cinemaDTO.ranking === stringJoin);
-      if (stringJoin === 'LEGENDADO,VIP') {
-        let listString = cinemaMovie
-          .filter((mov) => mov.cinemaDTO.ranking === stringJoin)
-          .map((mov) => {
-            mov.IsOnlyLegVip = 1;
-            return mov;
-          });
+    const stringJoin = rankingMovieList.length >= 2 ? rankingMovieList.join() : rankingMovieList[0];
 
-        setListFilterRegion(listString);
-      }
+    let listString = cinemaMovie
+      .filter((mov) => {
+        const movRanking = mov.cinemaDTO.ranking;
+        return rankingMovieList.length >= 2
+          ? movRanking === stringJoin
+          : movRanking.includes(stringJoin);
+      })
+      .map((mov) => {
+        Object.keys(rankingMap).forEach(
+          (key) => (mov[rankingMap[key]] = key === stringJoin ? 1 : 0)
+        );
+        return mov;
+      });
 
-      if (stringJoin === 'LEGENDADO,IMAX') {
-        let listString = cinemaMovie
-          .filter((mov) => mov.cinemaDTO.ranking === stringJoin)
-          .map((mov) => {
-            mov.IsOnlyLegImax = 1;
-            return mov;
-          });
-
-        setListFilterRegion(listString);
-      }
-
-      if (stringJoin === 'DUBLADO,VIP') {
-        let listString = cinemaMovie
-          .filter((mov) => mov.cinemaDTO.ranking === stringJoin)
-          .map((mov) => {
-            mov.IsOnlyDubVip = 1;
-            return mov;
-          });
-
-        setListFilterRegion(listString);
-      }
-
-      if (stringJoin === 'DUBLADO,IMAX') {
-        let listString = cinemaMovie
-          .filter((mov) => mov.cinemaDTO.ranking === stringJoin)
-          .map((mov) => {
-            mov.IsOnlyDubImax = 1;
-            return mov;
-          });
-
-        setListFilterRegion(listString);
-      }
-    } else {
-      const stringJoin = rankingMovieList[0];
-
-      let listString = cinemaMovie
-        .filter((mov) => {
-          if (mov.cinemaDTO.ranking.includes(',')) {
-            const elString = mov.cinemaDTO.ranking.split(',');
-
-            return elString.some((el) => el === stringJoin);
-          } else {
-            return mov.cinemaDTO.ranking === stringJoin;
-          }
-        })
-        .map((mov) => {
-          mov.IsOnlyLegVip = 0;
-          mov.IsOnlyLegImax = 0;
-          return mov;
-        });
-
-      setListFilterRegion(listString);
-    }
+    setListFilterRegion(listString);
   }, [rankingMovieList, cinemaMovie]);
 
   const handleClickHourMovie = (hour: string, el: cinemaMovieProps) => {
-    console.log(hour);
+    let dateMovieString = '';
+    if (dataSelected.weekDay === 'Hoje') {
+      dateMovieString = `${weekDay} ${dataSelected.dayYear} ${hour.replace(/[^0-9:]/g, '')}`;
+    } else {
+      dateMovieString = `${dataSelected.weekDay} ${dataSelected.dayYear} ${hour.replace(
+        /[^0-9:]/g,
+        ''
+      )}`;
+    }
 
-    console.log(el);
+    const checkoutMovie = {
+      id: movieSelected.id,
+      movie: movieSelected.title,
+      imgUrl: movieSelected.imgUrl,
+      locationMovie: el.cinemaDTO.nameCinema,
+      room: 1,
+      dateMovie: dateMovieString,
+      ranking: el.cinemaDTO.ranking,
+    };
+
+    nav('/checkout', { state: { user: userObj, checkoutMovie } });
   };
 
   return (
@@ -162,12 +151,20 @@ const LocationMovie = ({ movieSelected, rankingMovieList }: LocationMovieProps) 
             <Styled.ContainerCinemaRegionHours key={index}>
               <InfoMovieLocalSeatsPriceDetails el={el} />
 
-              <RankingDublado
+              <Ranking
                 el={el}
                 listHoursKeyValue={listHoursKeyValue}
                 handleClickHourMovie={handleClickHourMovie}
+                rankingType="DUBLADO"
               />
-              <RankingLegenda el={el} listHoursKeyValue={listHoursKeyValue} />
+
+              <Ranking
+                el={el}
+                listHoursKeyValue={listHoursKeyValue}
+                handleClickHourMovie={handleClickHourMovie}
+                rankingType="LEGENDADO"
+              />
+
               <RankingLegendaVip el={el} listHoursKeyValue={listHoursKeyValue} />
               <RankingLegendaVipSecond el={el} listHoursKeyValue={listHoursKeyValue} />
             </Styled.ContainerCinemaRegionHours>
@@ -180,12 +177,18 @@ const LocationMovie = ({ movieSelected, rankingMovieList }: LocationMovieProps) 
               <Styled.ContainerCinemaRegionHours key={index}>
                 <InfoMovieLocalSeatsPriceDetails el={el} />
 
-                <RankingDublado
+                <Ranking
                   el={el}
                   listHoursKeyValue={listHoursKeyValue}
                   handleClickHourMovie={handleClickHourMovie}
+                  rankingType="DUBLADO"
                 />
-                <RankingLegenda el={el} listHoursKeyValue={listHoursKeyValue} />
+                <Ranking
+                  el={el}
+                  listHoursKeyValue={listHoursKeyValue}
+                  handleClickHourMovie={handleClickHourMovie}
+                  rankingType="LEGENDADO"
+                />
                 <RankingLegendaVip el={el} listHoursKeyValue={listHoursKeyValue} />
                 <RankingLegendaVipSecond el={el} listHoursKeyValue={listHoursKeyValue} />
               </Styled.ContainerCinemaRegionHours>

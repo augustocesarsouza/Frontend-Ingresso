@@ -65,6 +65,7 @@ exports[`FirstContainer should matchSnapshot 1`] = `
         data-testid="container-location"
       >
         <svg
+          class="location-svg"
           viewBox="0 0 64 64"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -75,7 +76,7 @@ exports[`FirstContainer should matchSnapshot 1`] = `
         <p
           class=""
         >
-          Exemplo
+          Campinas
         </p>
       </div>
     </div>

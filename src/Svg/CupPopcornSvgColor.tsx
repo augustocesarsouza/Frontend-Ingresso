@@ -2,8 +2,6 @@ const CupPopcornSvgColor = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="64"
-      height="64"
       viewBox="0 0 64 64"
       className="injected-svg"
       data-src="/images/positive-bucket.svg"
@@ -11,7 +9,7 @@ const CupPopcornSvgColor = () => {
     >
       <g fill="none">
         <path
-          fill="#FA3106"
+          fill="#c8c8c8"
           d="M.241 12.474c-.156-7.305 33.524-8.337 33.524-.14L30.21 38.401c-2.527 8.926-23.947 8.975-26.276.07L.241 12.474z"
           transform="translate(14 8)"
         ></path>
@@ -21,19 +19,7 @@ const CupPopcornSvgColor = () => {
             transform="translate(14 8) translate(1.994 16.283)"
           ></path>
         </g>
-        <g fill="#FFD600" transform="translate(14 8) translate(1.33)">
-          <circle cx="2.397" cy="9.721" r="2.265"></circle>
-          <circle cx="5.324" cy="8.536" r="2.195"></circle>
-          <circle cx="8.095" cy="5.905" r="1.969"></circle>
-          <circle cx="9.628" cy="4.372" r="2.004"></circle>
-          <circle cx="12.991" cy="5.016" r="1.638"></circle>
-          <circle cx="14.995" cy="2.525" r="2.073"></circle>
-          <circle cx="18.34" cy="2.455" r="2.178"></circle>
-          <circle cx="20.588" cy="3.866" r="1.638"></circle>
-          <circle cx="23.288" cy="5.208" r="1.969"></circle>
-          <circle cx="24.23" cy="6.881" r="1.446"></circle>
-          <circle cx="25.746" cy="8.083" r="1.742"></circle>
-          <circle cx="27.314" cy="10.766" r="1.917"></circle>
+        <g fill="#ececec" transform="translate(14 8) translate(1.33)">
           <path d="M27.035 11.115c1.924.93.45-.736 3.554.697-3.181 5.097-24.848 5.613-30.004.174l-.07-1.324 10.315-5.68 7.597-2.196 5.158 3.31 3.45 5.019z"></path>
         </g>
       </g>
