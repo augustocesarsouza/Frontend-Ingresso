@@ -7,18 +7,19 @@ import BlockSvg from '../../../Svg/BlockSvg';
 interface MovieSeatsProps {
   barIncreases: number;
   handleSeatClicked: (seat: number, rowName: string) => void;
-  seatJoin: string;
   seatJoinList: string[];
+  setMouseEnterOrLeaveZoom: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const MovieSeats = ({
   barIncreases,
   handleSeatClicked,
-  seatJoin,
   seatJoinList,
+  setMouseEnterOrLeaveZoom,
 }: MovieSeatsProps) => {
   const [numberRow, setNumberRow] = useState(26);
   const [listRow, setListRow] = useState<number[] | null>(null);
+  const [listRowName, setListRowName] = useState<string[] | null>(null);
 
   useEffect(() => {
     const listRow: number[] = [];
@@ -26,7 +27,13 @@ const MovieSeats = ({
       listRow.push(i);
     }
     setListRow(listRow);
+    const listName = ['m', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'];
+    setListRowName(listName);
   }, [numberRow]);
+
+  useEffect(() => {
+    console.log(listRowName);
+  }, [listRowName]);
 
   const [entryDiv, setEntryDiv] = useState(0);
 
@@ -60,8 +67,19 @@ const MovieSeats = ({
     }
   }, [barIncreases]);
 
+  const handleMouseEnterZoomContainer = () => {
+    setMouseEnterOrLeaveZoom(true);
+  };
+
+  const handleMouseLeaveZoomContainer = () => {
+    setMouseEnterOrLeaveZoom(false);
+  };
+
   return (
-    <Styled.ZoomContainer>
+    <Styled.ZoomContainer
+      onMouseEnter={handleMouseEnterZoomContainer}
+      onMouseLeave={handleMouseLeaveZoomContainer}
+    >
       <Styled.ContainerSeats ref={containerSeatsRef}>
         <Styled.ContainerNameRow>
           <Styled.ContainerNameNumberRow>
@@ -355,6 +373,7 @@ const MovieSeats = ({
                       $seatjoinlist={seatJoinList}
                       $containerseatsball="notappear"
                       $seatsletter="c"
+                      onClick={() => handleSeatClicked(n, 'C')}
                     >
                       C{n}
                     </Styled.ContainerSeatsBall>
@@ -375,6 +394,7 @@ const MovieSeats = ({
                       $seatjoinlist={seatJoinList}
                       $containerseatsball="notappear"
                       $seatsletter="b"
+                      onClick={() => handleSeatClicked(n, 'B')}
                     >
                       B{n}
                     </Styled.ContainerSeatsBall>
@@ -395,6 +415,7 @@ const MovieSeats = ({
                       $seatjoinlist={seatJoinList}
                       $containerseatsball="notappear"
                       $seatsletter="a"
+                      onClick={() => handleSeatClicked(n, 'A')}
                     >
                       A{n}
                     </Styled.ContainerSeatsBall>

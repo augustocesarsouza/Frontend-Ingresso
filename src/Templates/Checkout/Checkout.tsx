@@ -22,7 +22,9 @@ import WarningChooseOnePayment from '../../Components/CheckoutComponents/Warning
 import PartOfLowPaymentInformation from '../../Components/CheckoutComponents/PartOfLowPaymentInformation/PartOfLowPaymentInformation';
 import CheckSvg from '../../Svg/CheckSvg';
 import CardCredit from '../../Svg/CardCredit';
-import CreditCard from '../../Components/CheckoutComponents/CardForPaymentMethodComponent/CreditCard/CreditCard';
+import CreditCard from '../../Components/CheckoutComponents/CardForPaymentMethodComponent/CreditCardComponents/CreditCard/CreditCard';
+import ChoiceSeats from '../../Components/CheckoutComponents/ChoiceSeats/ChoiceSeats';
+import MethodPayment from '../../Components/CheckoutComponents/MethodPayment/MethodPayment';
 
 export interface User {
   id: string;
@@ -79,71 +81,6 @@ const Checkout = () => {
 
   const [whatClicked, setWhatClicked] = useState(1);
 
-  const [isDragging, setIsDragging] = useState(false);
-  const [initialY, setInitialY] = useState(0);
-  const [topValue, setTopValue] = useState(81);
-
-  const containerRef = useRef(null);
-
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    setInitialY(e.clientY);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const [barIncreases, setBarIncreases] = useState(0);
-
-  const handleMouseMove = (e) => {
-    if (isDragging) {
-      const deltaY = e.clientY - initialY;
-      const newTopValue = topValue + deltaY;
-
-      const invertedTopValue = 85 - newTopValue;
-
-      if (invertedTopValue >= -5 && invertedTopValue <= 85) {
-        setBarIncreases(invertedTopValue);
-      }
-
-      if (newTopValue >= -5 && newTopValue <= 85) {
-        setTopValue(newTopValue);
-      }
-
-      setInitialY(e.clientY);
-    }
-  };
-
-  const handleScroll = (e) => {
-    const deltaY = e.deltaY;
-    setBarIncreases((prevValue) => {
-      const newValue = deltaY > 0 ? Math.max(0, prevValue - 3) : Math.min(85, prevValue + 3);
-      const invertedValue = 85 - newValue;
-      setTopValue(invertedValue);
-
-      return newValue;
-    });
-  };
-
-  useEffect(() => {
-    document.addEventListener('wheel', handleScroll);
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-    } else {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    }
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('wheel', handleScroll);
-    };
-  }, [isDragging]);
-
-  const [seatJoin, setSeatJoin] = useState('');
   const [seatJoinList, setSeatJoinList] = useState<string[]>([]);
 
   const handleSeatClicked = (seat: number, rowName: string) => {
@@ -156,7 +93,6 @@ const Checkout = () => {
         return prev.filter((str) => str !== seatJoin);
       }
     });
-    // setSeatJoin(`${rowName} ${seat}`);
   };
 
   const [listFormPayment, setListFormPayment] = useState<listFormPayment[]>([]);
@@ -393,38 +329,6 @@ const Checkout = () => {
     setChooseOnePayment(false);
   };
 
-  const [activeLabel, setActiveLabel] = useState(false);
-  const [mouseEnterLabel, setMouseEnterLabel] = useState('');
-  const [clickLabel, setClickLabel] = useState('');
-  const [mouseEnterDebit, setMouseEnterDebit] = useState(false);
-
-  const handleClickLabel = (value: string) => {
-    setActiveLabel((prev) => !prev);
-
-    setClickLabel((prev) => (prev.length <= 0 ? value : ''));
-  };
-
-  const handleClickLabelMain = (value: string) => {
-    if (!mouseEnterDebit) {
-      setActiveLabel((prev) => !prev);
-      setClickLabel((prev) => (prev.length <= 0 ? value : ''));
-    }
-  };
-
-  const handleMouseEnter = (value: string) => {
-    setMouseEnterDebit(true);
-    setMouseEnterLabel(value);
-  };
-
-  const handleMouseLeave = (value: string) => {
-    setMouseEnterDebit(false);
-    setMouseEnterLabel(value);
-  };
-
-  useEffect(() => {
-    // console.log(clickLabel);
-  }, [clickLabel]);
-
   return (
     <Styled.ContainerMain>
       <TopPartCheckout user={user} />
@@ -446,38 +350,21 @@ const Checkout = () => {
               />
             </Styled.ContainerFirst>
           )}
-          {whatClicked === 1 && (
-            <Styled.ContainerSecond>
-              <Styled.ContainerTopYourSeats>
-                <Styled.SpanSecond>Escolha seus assentos:</Styled.SpanSecond>
-              </Styled.ContainerTopYourSeats>
-              <MovieSeats
-                barIncreases={barIncreases}
-                handleSeatClicked={handleSeatClicked}
-                seatJoin={seatJoin}
-                seatJoinList={seatJoinList}
-              />
-              <Styled.ContainerParaIncreases>
-                <Styled.ContainerParaMain>
-                  <Styled.SpanIncreases $topvalue={barIncreases}></Styled.SpanIncreases>
-                  <Styled.ContainerBallIncreases
-                    onMouseDown={handleMouseDown}
-                    ref={containerRef}
-                    $topvalue={topValue}
-                  ></Styled.ContainerBallIncreases>
-                </Styled.ContainerParaMain>
-              </Styled.ContainerParaIncreases>
-            </Styled.ContainerSecond>
-          )}
-          {whatClicked === 2 && (
-            <TicketTypes
-              listFormPayment={listFormPayment}
-              paymentSelectSeats={paymentSelectSeats}
-              seatJoinList={seatJoinList}
-              paymentKeyValue={paymentKeyValue}
-              handleClickSeats={handleClickSeats}
-            />
-          )}
+
+          <ChoiceSeats
+            whatClicked={whatClicked}
+            seatJoinList={seatJoinList}
+            handleSeatClicked={handleSeatClicked}
+          />
+
+          <TicketTypes
+            whatClicked={whatClicked}
+            listFormPayment={listFormPayment}
+            paymentSelectSeats={paymentSelectSeats}
+            seatJoinList={seatJoinList}
+            paymentKeyValue={paymentKeyValue}
+            handleClickSeats={handleClickSeats}
+          />
 
           <PopcornSelect
             checkoutMovie={checkoutMovie}
@@ -486,126 +373,7 @@ const Checkout = () => {
             setListProducts={setListProducts}
           />
 
-          {whatClicked === 4 && (
-            <Styled.ContainerPaymentForm>
-              <Styled.ContainerMainPaymentMethods>
-                <Styled.ContainerSvgCardPaymentMethod>
-                  <FontAwesomeIcon icon={faCreditCard} />
-                  <Styled.P>FORMAS DE PAGAMENTO</Styled.P>
-                </Styled.ContainerSvgCardPaymentMethod>
-              </Styled.ContainerMainPaymentMethods>
-              <Styled.ContainerTypesPayment>
-                <CreditCard
-                  clickLabel={clickLabel}
-                  totalValuePrice={totalValuePrice}
-                  activeLabel={activeLabel}
-                  mouseEnterLabel={mouseEnterLabel}
-                  handleClickLabelMain={handleClickLabelMain}
-                  handleClickLabel={handleClickLabel}
-                  handleMouseEnter={handleMouseEnter}
-                  handleMouseLeave={handleMouseLeave}
-                />
-
-                <Styled.WrapperCreditCard
-                  $creditcard="2"
-                  $clicklabel={clickLabel}
-                  onClick={() => handleClickLabelMain('2')}
-                >
-                  <Styled.ContainerAllCreditCardSpanInfo>
-                    <Styled.ContainerCheckbox onClick={() => handleClickLabel('2')}>
-                      <Styled.Label
-                        $activelabel={String(activeLabel)}
-                        $label="2"
-                        $mouseenterlabel={mouseEnterLabel}
-                        onMouseEnter={() => handleMouseEnter('2')}
-                        onMouseLeave={() => handleMouseLeave('')}
-                      >
-                        {clickLabel === '2' && <>{activeLabel && <CheckSvg />}</>}
-                      </Styled.Label>
-                    </Styled.ContainerCheckbox>
-                    <Styled.WrapperCreditCardInfo
-                      onMouseEnter={() => handleMouseEnter('2')}
-                      onMouseLeave={() => handleMouseLeave('')}
-                      onClick={() => handleClickLabel('2')}
-                    >
-                      <Styled.ContainerSvgCardCreditSpan>
-                        <Styled.WrapperCreditCardSvg>
-                          <CardCredit />
-                          <Styled.SpanCardCredit>D</Styled.SpanCardCredit>
-                        </Styled.WrapperCreditCardSvg>
-                        <Styled.Span $span="3">
-                          Cartão de <Styled.SpanCredit $spancd="debito">Débito</Styled.SpanCredit>
-                        </Styled.Span>
-                      </Styled.ContainerSvgCardCreditSpan>
-                      <Styled.Span $span="4">{`R$ ${totalValuePrice}`}</Styled.Span>
-                    </Styled.WrapperCreditCardInfo>
-                  </Styled.ContainerAllCreditCardSpanInfo>
-                  {clickLabel === '2' && (
-                    <div>
-                      <h1>aqui</h1>
-                    </div>
-                  )}
-                </Styled.WrapperCreditCard>
-                <Styled.WrapperCreditCard
-                  $creditcard="3"
-                  $clicklabel={clickLabel}
-                  onClick={() => handleClickLabelMain('3')}
-                >
-                  <Styled.ContainerCheckbox onClick={() => handleClickLabel('3')}>
-                    <Styled.Label
-                      $activelabel={String(activeLabel)}
-                      $label="3"
-                      $mouseenterlabel={mouseEnterLabel}
-                      onMouseEnter={() => handleMouseEnter('3')}
-                      onMouseLeave={() => handleMouseLeave('')}
-                    >
-                      {clickLabel === '3' && <>{activeLabel && <CheckSvg />}</>}
-                    </Styled.Label>
-                  </Styled.ContainerCheckbox>
-                  <Styled.WrapperCreditCardInfo
-                    onMouseEnter={() => handleMouseEnter('3')}
-                    onMouseLeave={() => handleMouseLeave('')}
-                    onClick={() => handleClickLabel('3')}
-                  >
-                    <Styled.ContainerSvgCardCreditSpan>
-                      <Styled.WrapperPayImg>
-                        <Styled.ImgPay src="https://res.cloudinary.com/dyqsqg7pk/image/upload/v1704291411/Pay_vzg6as.png" />
-                      </Styled.WrapperPayImg>
-                    </Styled.ContainerSvgCardCreditSpan>
-                    <Styled.Span $span="5">{`R$ ${totalValuePrice}`}</Styled.Span>
-                  </Styled.WrapperCreditCardInfo>
-                </Styled.WrapperCreditCard>
-                <Styled.WrapperCreditCard
-                  $creditcard="4"
-                  $clicklabel={clickLabel}
-                  onClick={() => handleClickLabelMain('4')}
-                >
-                  <Styled.ContainerCheckbox onClick={() => handleClickLabel('4')}>
-                    <Styled.Label
-                      $activelabel={String(activeLabel)}
-                      $label="4"
-                      $mouseenterlabel={mouseEnterLabel}
-                      onMouseEnter={() => handleMouseEnter('4')}
-                      onMouseLeave={() => handleMouseLeave('')}
-                    >
-                      {clickLabel === '4' && <>{activeLabel && <CheckSvg />}</>}
-                    </Styled.Label>
-                  </Styled.ContainerCheckbox>
-                  <Styled.WrapperCreditCardInfo
-                    onMouseEnter={() => handleMouseEnter('4')}
-                    onMouseLeave={() => handleMouseLeave('')}
-                    onClick={() => handleClickLabel('4')}
-                  >
-                    <Styled.WrapperPayPalImg>
-                      <Styled.ImgPay src="https://res.cloudinary.com/dyqsqg7pk/image/upload/v1704292650/PayPal-Logo_shc49l.png" />
-                    </Styled.WrapperPayPalImg>
-
-                    <Styled.Span $span="6">{`R$ ${totalValuePrice}`}</Styled.Span>
-                  </Styled.WrapperCreditCardInfo>
-                </Styled.WrapperCreditCard>
-              </Styled.ContainerTypesPayment>
-            </Styled.ContainerPaymentForm>
-          )}
+          <MethodPayment whatClicked={whatClicked} totalValuePrice={totalValuePrice} />
         </Styled.ContainerLeftRightSide>
 
         <PartOfLowPaymentInformation

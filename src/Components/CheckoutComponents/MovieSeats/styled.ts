@@ -50,8 +50,6 @@ export const ContainerSeatsBall = styled.div<ContainerSeatsBallProps>`
   justify-content: center;
   cursor: pointer;
   
-
-
   border-radius: ${props => (props.$numberrow >= 3 && props.$numberrow <= 10 || props.$numberrow === 12 || props.$numberrow === 13 ) && props.$seatsletter === "d" && "15%"};
   background: ${props => (props.$numberrow >= 3 && props.$numberrow <= 10 || props.$numberrow === 12 || props.$numberrow === 13 ) && props.$seatsletter === "d" && "white"};
   border: ${props => (props.$numberrow >= 3 && props.$numberrow <= 10 || props.$numberrow === 12 || props.$numberrow === 13 ) &&  props.$seatsletter === "d" && "1px solid #3478c1"}; 
