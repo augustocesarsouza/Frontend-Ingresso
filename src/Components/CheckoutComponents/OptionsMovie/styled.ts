@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ContainerOptionsMovie = styled.div`
   padding: 6px;
   /* position: relative; */
-  margin-bottom: 100px;
+  margin-bottom: 80px;
 `
 
 export const SpanBackPage = styled.span`
@@ -14,27 +14,17 @@ export const a = styled.a`
   cursor: pointer;
 `
 
-interface ContainerOrdersDatePersonalPaymentProps {
-  $svgformsofpayment: string;
-}
-
-export const ContainerOrdersDatePersonalPayment = styled.div<ContainerOrdersDatePersonalPaymentProps>`
+export const ContainerOrdersDatePersonalPayment = styled.div`
   margin-top: 20px;
   width: 30rem;
-  width: ${props => props.$svgformsofpayment === "true" && "100%"};
 `
 
-interface ContainerInfoProps {
-  $svgformsofpayment: string;
-}
-
-export const ContainerInfo = styled.div<ContainerInfoProps>`
+export const ContainerInfo = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2px;
 
-  width: ${props => props.$svgformsofpayment === "true" && "100%"};
   position: relative;
 `
 
@@ -49,35 +39,36 @@ interface WrapperSvgProps {
 export const WrapperSvg = styled.div<WrapperSvgProps>`
   background: ${props => props.$wrappersvg === props.$whatclickedbutton && "#ffa90c"};
   pointer-events: ${props => props.$listnumberallowed.includes(Number(props.$wrappersvg)) ? "auto" : "none"};
+  min-height: 53px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   > div {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding:  ${props => props.$wrappersvg === "1" && "10px 15px"};
-    border-left:  ${props => props.$wrappersvg === props.$whatclickedbutton ? "none" : "5px solid #c8c8c8"};
+    padding:  ${props => props.$wrappersvg === props.$whatclickedbutton ? "10px 19px" : "10px 15px"};
+    border-left:  ${props => props.$wrappersvg === props.$whatclickedbutton ? "none" : "4px solid #c8c8c8"};
 
-    border-left:  ${props => props.$whatclickedbutton !== "1" && (props.$wrappersvg === "1" && props.$seatjoinlist.length > 0) && "5px solid #15aaed"};
-    border-left:  ${props => props.$whatclickedbutton !== "2" && (props.$wrappersvg === "2" && props.$seatjoinlist.length > 0) && "5px solid #15aaed"};
-    border-left:  ${props => props.$whatclickedbutton !== "3" && (props.$wrappersvg === "3" && props.$alltrue === true) && "5px solid #15aaed"};
-    border-left:  ${props => props.$whatclickedbutton !== "4" && (props.$wrappersvg === "4" && props.$alltrue === true) && "5px solid #15aaed"};
     
+    border-left:  ${props => props.$whatclickedbutton !== "1" && (props.$wrappersvg === "1" && props.$seatjoinlist.length > 0) && "4px solid #15aaed"};
+    border-left:  ${props => props.$whatclickedbutton !== "2" && (props.$wrappersvg === "2" && props.$seatjoinlist.length > 0) && "4px solid #15aaed"};
+    border-left:  ${props => props.$whatclickedbutton !== "3" && (props.$wrappersvg === "3" && props.$alltrue === true) && "4px solid #15aaed"};
+    border-left:  ${props => props.$whatclickedbutton !== "4" && (props.$wrappersvg === "4" && props.$alltrue === true) && "4px solid #15aaed"}; 
   }
 
   & svg {
-    width: ${props => props.$wrappersvg === "1" && "18px"};
-    margin-right: ${props => props.$wrappersvg === "1" && "5px"};
-    fill: ${props => props.$wrappersvg === props.$whatclickedbutton ? "white" : "#c8c8c8"};
-
-    color:  ${props => props.$wrappersvg === props.$whatclickedbutton ? "white" : "#c8c8c8"};
+    color:  ${props => props.$wrappersvg === props.$whatclickedbutton && "white"};
+    color:  ${props => props.$wrappersvg !== props.$whatclickedbutton && "#15aaed"};
     
-    color:  ${props => props.$whatclickedbutton !== "1" && (props.$wrappersvg === "1" && props.$seatjoinlist.length > 0) && "#15aaed"};
-    fill:  ${props => props.$whatclickedbutton !== "2" && (props.$wrappersvg === "2" && props.$seatjoinlist.length > 0) && "#15aaed"};
+    color: ${props => props.$wrappersvg === "2" && props.$seatjoinlist.length === 0 && "#c8c8c8"};
+    color: ${props => props.$wrappersvg === "2" && props.$seatjoinlist.length > 0 && "#15aaed"};
 
-    fill:  ${props => props.$whatclickedbutton !== "3" && (props.$wrappersvg === "3" && props.$alltrue === true) && "#15aaed"};
-    fill:  ${props => props.$whatclickedbutton !== "4" && (props.$wrappersvg === "4" && props.$alltrue === true) && "#15aaed"};
-    
+    color: ${props => props.$wrappersvg === "2" && props.$seatjoinlist.length > 0 && (props.$wrappersvg === props.$whatclickedbutton) &&  "white"};
+
+    color:  ${props => props.$wrappersvg !== props.$whatclickedbutton && (props.$wrappersvg === "3" && props.$alltrue === true) && "#15aaed"};
+    color:  ${props => props.$wrappersvg !== props.$whatclickedbutton && (props.$wrappersvg === "4" && props.$alltrue === true) && "#15aaed"};
+
+    color:  ${props => props.$wrappersvg !== props.$whatclickedbutton && (props.$wrappersvg === "3" && props.$alltrue === false) && "#c8c8c8"};
+    color:  ${props => props.$wrappersvg !== props.$whatclickedbutton && (props.$wrappersvg === "4" && props.$alltrue === false) && "#c8c8c8"}; 
   }
 
   & p {

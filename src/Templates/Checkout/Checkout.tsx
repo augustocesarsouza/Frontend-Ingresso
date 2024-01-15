@@ -1,30 +1,19 @@
 import { useLocation } from 'react-router-dom';
 import * as Styled from './styled';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import TopPartCheckout from '../../Components/CheckoutComponents/TopPartCheckout/TopPartCheckout';
 import MovieBannerRoom from '../../Components/CheckoutComponents/MovieBannerRoom/MovieBannerRoom';
 import OptionsMovie from '../../Components/CheckoutComponents/OptionsMovie/OptionsMovie';
-import MovieSeats from '../../Components/CheckoutComponents/MovieSeats/MovieSeats';
 import { Url } from '../../Utils/Url';
 import TicketTypes from '../../Components/CheckoutComponents/TicketTypes/TicketTypes';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faChevronRight,
-  faCircleExclamation,
-  faCreditCard,
-  faMinus,
-  faPlus,
-  faXmark,
-} from '@fortawesome/free-solid-svg-icons';
 import PopcornSelect from '../../Components/CheckoutComponents/PopcornSelect/PopcornSelect';
 import WarningChooseOneSeats from '../../Components/CheckoutComponents/WarningChooseOneSeats/WarningChooseOneSeats';
 import WarningChooseOnePayment from '../../Components/CheckoutComponents/WarningChooseOnePayment/WarningChooseOnePayment';
 import PartOfLowPaymentInformation from '../../Components/CheckoutComponents/PartOfLowPaymentInformation/PartOfLowPaymentInformation';
-import CheckSvg from '../../Svg/CheckSvg';
-import CardCredit from '../../Svg/CardCredit';
-import CreditCard from '../../Components/CheckoutComponents/CardForPaymentMethodComponent/CreditCardComponents/CreditCard/CreditCard';
 import ChoiceSeats from '../../Components/CheckoutComponents/ChoiceSeats/ChoiceSeats';
 import MethodPayment from '../../Components/CheckoutComponents/MethodPayment/MethodPayment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleExclamation, faThumbsUp, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export interface User {
   id: string;
@@ -33,7 +22,8 @@ export interface User {
 }
 
 export interface CheckoutMovie {
-  id: string;
+  cinemaId: string;
+  movieId: string;
   imgUrl: string;
   dateMovie: string;
   locationMovie: string;
@@ -57,6 +47,7 @@ export interface listSeatsMarked {
 export interface paymentSelectSeatsProps {
   paymentName: string;
   amountSeats: number;
+  nameSeats: string[];
 }
 
 export interface listProductsProps {
@@ -66,6 +57,13 @@ export interface listProductsProps {
   selectNumber: number;
 }
 
+export interface MovieRegionTickets {
+  id: string;
+  cinemaId: string;
+  movieId: string;
+  ticketsSeats: string;
+}
+
 const Checkout = () => {
   const location = useLocation();
   const [user, setUser] = useState<User | null>(null);
@@ -73,6 +71,7 @@ const Checkout = () => {
 
   useEffect(() => {
     if (location.state === null) return;
+
     const user = location.state.user;
     setCheckoutMovie(location.state.checkoutMovie);
 
@@ -82,9 +81,37 @@ const Checkout = () => {
   const [whatClicked, setWhatClicked] = useState(1);
 
   const [seatJoinList, setSeatJoinList] = useState<string[]>([]);
+  const [paymentSelectSeats, setPaymentSelectSeats] = useState<paymentSelectSeatsProps[]>([]);
+  const [paymentKeyValue, setPaymentKeyValue] = useState<{ [key: string]: listSeatsMarked[] }>({});
+  const [listFormPayment, setListFormPayment] = useState<listFormPayment[]>([]);
+  const [seatsWithoutWhiteSpace, setSeatsWithoutWhiteSpace] = useState('');
 
   const handleSeatClicked = (seat: number, rowName: string) => {
     const seatJoin = `${rowName} ${seat}`;
+    // console.log(seatJoin);
+
+    const seatsWithoutWhiteSpace = seatJoin.replace(/\s/g, '');
+    setSeatsWithoutWhiteSpace(seatsWithoutWhiteSpace);
+
+    setPaymentSelectSeats((prev) => {
+      if (prev.some((el) => el.nameSeats.includes(seatJoin))) {
+        const newArray = prev.map((el) => {
+          if (el.paymentName === formPayment) {
+            return {
+              ...el,
+              amountSeats: el.amountSeats - 1,
+              nameSeats: el.nameSeats.filter((ft) => ft !== seatJoin),
+            };
+          } else {
+            return el;
+          }
+        });
+
+        return newArray;
+      }
+
+      return prev;
+    });
 
     setSeatJoinList((prev) => {
       if (!prev.includes(seatJoin)) {
@@ -95,11 +122,10 @@ const Checkout = () => {
     });
   };
 
-  const [listFormPayment, setListFormPayment] = useState<listFormPayment[]>([]);
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (checkoutMovie === null) return;
-    fetchFormsPayment(checkoutMovie.id);
+    fetchFormsPayment(checkoutMovie.movieId);
+    fetchGetByMovieIdAndCinemaId(checkoutMovie.movieId, checkoutMovie.cinemaId);
   }, [checkoutMovie]);
 
   const fetchFormsPayment = async (movieId: string) => {
@@ -121,55 +147,65 @@ const Checkout = () => {
     }
   };
 
-  const [paymentKeyValue, setPaymentKeyValue] = useState<{ [key: string]: listSeatsMarked[] }>({});
-  const [paymentSelectSeats, setPaymentSelectSeats] = useState<paymentSelectSeatsProps[]>([]);
+  const [ticketsSeats, setTicketsSeats] = useState<string[]>([]);
+
+  const fetchGetByMovieIdAndCinemaId = async (movieId: string, cinemaId: string) => {
+    const res = await fetch(
+      `${Url}/movieregiontickets/getbymovieidandcinemaid/${movieId}/${cinemaId}`
+    );
+    if (res.status === 200) {
+      const json = await res.json();
+      const ticketsSeats: string = json.data.ticketsSeats;
+      var arraySeats = ticketsSeats.split(',');
+      const arraySeatsAlreadyChosen: string[] = [];
+      arraySeats.forEach((str) => {
+        arraySeatsAlreadyChosen.push(str.replace(/\s/g, ''));
+        // /\s/g corresponde a todos os espaços em branco na string, e o método replace() é usado para substituí-los por uma string vazia.
+      });
+
+      setTicketsSeats(arraySeatsAlreadyChosen);
+    }
+  };
+
+  useEffect(() => {
+    // console.log(ticketsSeats);
+  }, [ticketsSeats]);
+
   const [formPayment, setFormPayment] = useState('');
-  const [seatChosen, setSeatChosen] = useState('');
-  const [uncheck, setUncheck] = useState<listSeatsMarked | null>(null);
-
-  // const handleClickSeats = (sea, formPayment) => {
-  //   setPaymentKeyValue((prev) => {
-  //     const array = prev[formPayment];
-
-  //     const newArray = array.map((el) => {
-  //       if (el.nameSeat === sea) {
-  //         return { ...el, isSelect: 1 };
-  //       }
-
-  //       return el;
-  //     });
-
-  //     return { ...prev, [formPayment]: newArray };
-  //   });
-
-  //   setPaymentKeyValue((prev) => {
-  //     let updatedState = { ...prev };
-
-  //     listFormPayment.forEach((el) => {
-  //       if (el.formName !== formPayment) {
-  //         const array = updatedState[el.formName];
-
-  //         const newArray = array.map((el) => {
-  //           if (el.nameSeat === sea) {
-  //             return { ...el, isSelect: 2 };
-  //           }
-
-  //           return el;
-  //         });
-  //         updatedState = { ...updatedState, [el.formName]: newArray };
-  //       }
-  //     });
-  //     return updatedState;
-  //   });
-  // };
-
-  // useEffect(() => {
-
-  // }, []);
 
   const handleClickSeats = (sea: string, formPayment: string) => {
     setFormPayment(formPayment);
-    setSeatChosen(sea);
+
+    setPaymentSelectSeats((prev) => {
+      if (prev.some((el) => el.nameSeats.includes(sea))) {
+        const newArray = prev.map((el) => {
+          if (el.paymentName === formPayment) {
+            return {
+              ...el,
+              amountSeats: el.amountSeats - 1,
+              nameSeats: el.nameSeats.filter((ft) => ft !== sea),
+            };
+          } else {
+            return el;
+          }
+        });
+
+        return newArray;
+      } else if (prev.some((el) => el.paymentName === formPayment)) {
+        const newArray = prev.map((pr) => {
+          if (pr.paymentName === formPayment) {
+            return { ...pr, amountSeats: pr.amountSeats + 1, nameSeats: [...pr.nameSeats, sea] };
+          } else {
+            return pr;
+          }
+        });
+
+        return newArray;
+      } else {
+        return [...prev, { amountSeats: 1, paymentName: formPayment, nameSeats: [sea] }];
+      }
+    });
+
     setPaymentKeyValue((prev) => {
       let updatedState = { ...prev };
 
@@ -180,7 +216,7 @@ const Checkout = () => {
         const newArray = array.map((seat) => {
           if (seat.nameSeat === sea) {
             if (seat.isSelect === 1) {
-              setUncheck(seat);
+              // setUncheck(seat);
 
               return { ...seat, isSelect: 0 };
             }
@@ -205,6 +241,11 @@ const Checkout = () => {
   };
 
   useEffect(() => {
+    if (seatJoinList.length <= 0) {
+      setPaymentSelectSeats([]);
+      setFormPayment('');
+    }
+
     listFormPayment.forEach((el) => {
       let arrayObj = [];
       seatJoinList.forEach((se) => {
@@ -226,54 +267,6 @@ const Checkout = () => {
     });
   }, [listFormPayment, seatJoinList]);
 
-  useEffect(() => {
-    if (uncheck !== null) {
-      setPaymentSelectSeats((prev) => {
-        if (prev.some((e) => e.paymentName === uncheck.namePayment)) {
-          const newArray = prev.map((pay) => {
-            if (pay.paymentName === formPayment) {
-              setUncheck(null);
-              setFormPayment('');
-              return { ...pay, amountSeats: pay.amountSeats - 1 };
-            } else {
-              return pay;
-            }
-          });
-
-          return newArray;
-        }
-      });
-      return;
-    }
-
-    listFormPayment.forEach((el) => {
-      const isCurrentForm = el.formName === formPayment;
-
-      if (isCurrentForm) {
-        const objSeats = {
-          paymentName: formPayment,
-          amountSeats: 1,
-        };
-
-        setPaymentSelectSeats((prev) => {
-          if (prev.some((e) => e.paymentName === formPayment)) {
-            const newArray = prev.map((pay) => {
-              if (pay.paymentName === formPayment) {
-                return { ...pay, amountSeats: pay.amountSeats + 1 };
-              } else {
-                return pay;
-              }
-            });
-
-            return newArray;
-          } else {
-            return [...prev, objSeats];
-          }
-        });
-      }
-    });
-  }, [formPayment, seatChosen, uncheck]);
-
   const [listProducts, setListProducts] = useState<listProductsProps[]>([]);
 
   const [countValueTotalOfAssentsAndProduct, setCountValueTotalOfAssentsAndProduct] = useState(0);
@@ -282,8 +275,61 @@ const Checkout = () => {
 
   const [chooseOneSeats, setChooseOneSeats] = useState(false);
   const [chooseOnePayment, setChooseOnePayment] = useState(false);
+  const [loadPayment, setLoadPayment] = useState(false);
+  const [seatPurchasedSuccessfully, setSeatPurchasedSuccessfully] = useState(false);
+
+  const updateSeatsBought = async () => {
+    if (checkoutMovie === null) return;
+
+    let seatFullString = '';
+    if (seatJoinList.length > 0) {
+      seatJoinList.forEach((se, i) => {
+        const word = se.replace(/\s/g, '');
+        seatFullString += word;
+        if (i < seatJoinList.length - 1) {
+          seatFullString += ',';
+        }
+      });
+    }
+
+    const seat = {
+      TicketsSeats: seatFullString,
+      MovieId: checkoutMovie.movieId,
+      CinemaId: checkoutMovie.cinemaId,
+    };
+    const res = await fetch(`${Url}/movieregiontickets/update`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(seat),
+    });
+    if (res.status === 200) {
+      const json = await res.json();
+      const data: MovieRegionTickets = json.data;
+
+      var arraySeats = data.ticketsSeats.split(',');
+      const arraySeatsAlreadyChosen: string[] = [];
+      arraySeats.forEach((str) => {
+        arraySeatsAlreadyChosen.push(str.replace(/\s/g, ''));
+      });
+
+      setSeatJoinList([]);
+      setTicketsSeats(arraySeatsAlreadyChosen);
+      setTimeout(() => {
+        setLoadPayment(false);
+        setSeatPurchasedSuccessfully(true);
+      }, 2000);
+    }
+  };
 
   const handleButtonSkip = () => {
+    if (whatClicked === 4) {
+      setLoadPayment(true);
+      document.body.style.overflow = 'hidden';
+      updateSeatsBought();
+    }
+
     if (whatClicked === 1) {
       if (seatJoinList.length <= 0) {
         setChooseOneSeats(true);
@@ -329,9 +375,62 @@ const Checkout = () => {
     setChooseOnePayment(false);
   };
 
+  const [whatButtonClicked, setWhatButtonClicked] = useState(0);
+
+  useEffect(() => {
+    if (whatButtonClicked === 1) {
+      setPaymentSelectSeats([]);
+      setPaymentKeyValue((prev) => {
+        let updatedState = { ...prev };
+
+        listFormPayment.forEach((el) => {
+          const array = updatedState[el.formName];
+
+          const newArray = array.map((seat) => {
+            if (seat.isSelect === 1) {
+              // setUncheck(seat);
+
+              return { ...seat, isSelect: 0 };
+            }
+
+            if (seat.isSelect === 2) {
+              return { ...seat, isSelect: 0 };
+            }
+
+            return seat;
+          });
+
+          updatedState = { ...updatedState, [el.formName]: newArray };
+        });
+
+        return updatedState;
+      });
+    }
+  }, [whatButtonClicked, listFormPayment]);
+
+  const handleExitSeatsSuccessfully = () => {
+    setSeatPurchasedSuccessfully(false);
+    document.body.style.overflow = 'auto';
+    setWhatClicked(1);
+  };
+
+  const [mouseInnerDiv, setMouseInnerDiv] = useState(false);
+  const [clickDivMain, setClickDivMain] = useState(false);
+
+  const handleClickDivMain = () => {
+    setClickDivMain(false);
+    if (!mouseInnerDiv) {
+      setClickDivMain(true);
+    }
+  };
+
   return (
-    <Styled.ContainerMain>
-      <TopPartCheckout user={user} />
+    <Styled.ContainerMain onClick={handleClickDivMain}>
+      <TopPartCheckout
+        user={user}
+        clickDivMain={clickDivMain}
+        setMouseInnerDiv={setMouseInnerDiv}
+      />
       <Styled.ContainerMiddle>
         <Styled.ContainerLeftRightSide>
           {checkoutMovie && (
@@ -347,6 +446,7 @@ const Checkout = () => {
                 setCountValueTotalOfAssentsAndProduct={setCountValueTotalOfAssentsAndProduct}
                 setTotalValuePrice={setTotalValuePrice}
                 setCountOfProduct={setCountOfProduct}
+                setWhatButtonClicked={setWhatButtonClicked}
               />
             </Styled.ContainerFirst>
           )}
@@ -354,6 +454,7 @@ const Checkout = () => {
           <ChoiceSeats
             whatClicked={whatClicked}
             seatJoinList={seatJoinList}
+            ticketsSeats={ticketsSeats}
             handleSeatClicked={handleSeatClicked}
           />
 
@@ -375,6 +476,35 @@ const Checkout = () => {
 
           <MethodPayment whatClicked={whatClicked} totalValuePrice={totalValuePrice} />
         </Styled.ContainerLeftRightSide>
+
+        {loadPayment && (
+          <Styled.ContainerMainLoader>
+            <Styled.ContainerLoader></Styled.ContainerLoader>
+          </Styled.ContainerMainLoader>
+        )}
+
+        {seatPurchasedSuccessfully && (
+          <Styled.WrapperMandatoryToChoose>
+            <Styled.ContainerAlert>
+              <Styled.WrapperSvgExit onClick={handleExitSeatsSuccessfully}>
+                <FontAwesomeIcon icon={faXmark} />
+              </Styled.WrapperSvgExit>
+              <Styled.WrapperSvgWarning>
+                <FontAwesomeIcon icon={faThumbsUp} />
+              </Styled.WrapperSvgWarning>
+              <Styled.WrapperPAlertAndSpanAlert>
+                <Styled.PAlert>Compra Bem-Sucedida</Styled.PAlert>
+                <Styled.SpanAlert>
+                  {`Sua Sala é Sala 1 e seu Assento é: ${seatsWithoutWhiteSpace}`}
+                </Styled.SpanAlert>
+              </Styled.WrapperPAlertAndSpanAlert>
+
+              <Styled.ButtonContinue onClick={handleExitSeatsSuccessfully}>
+                CONTINUAR
+              </Styled.ButtonContinue>
+            </Styled.ContainerAlert>
+          </Styled.WrapperMandatoryToChoose>
+        )}
 
         <PartOfLowPaymentInformation
           countOfProduct={countOfProduct}

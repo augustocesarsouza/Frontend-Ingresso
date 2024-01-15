@@ -12,6 +12,7 @@ import { ObjUser } from '../../../LoginComponents/SectionFirst/Form/Form';
 export interface cinemaMovieProps {
   cinemaDTO: CinemaDTO;
   screeningSchedule: string;
+
   IsOnlyLegVip: number;
   IsOnlyLegImax: number;
   IsOnlyDubVip: number;
@@ -24,6 +25,7 @@ interface CinemaDTO {
   district: string;
   nameCinema: string;
   ranking: string;
+  id: string;
 }
 
 interface LocationMovieProps {
@@ -72,7 +74,6 @@ const LocationMovie = ({
 
   useEffect(() => {
     if (cinemaMovie === null) return;
-    // console.log(cinemaMovie);
 
     cinemaMovie.forEach((el) => {
       const hours = el.screeningSchedule.split(',');
@@ -131,7 +132,8 @@ const LocationMovie = ({
     }
 
     const checkoutMovie = {
-      id: movieSelected.id,
+      cinemaId: el.cinemaDTO.id,
+      movieId: movieSelected.id,
       movie: movieSelected.title,
       imgUrl: movieSelected.imgUrl,
       locationMovie: el.cinemaDTO.nameCinema,

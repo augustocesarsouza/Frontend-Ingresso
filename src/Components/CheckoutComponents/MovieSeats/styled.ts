@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 export const ZoomContainer = styled.div`
   overflow: hidden; 
+  user-select: none;
 `;
 
 export const ContainerSeats = styled.div`
   margin-top: 15px;
-  /* transform: scale(1.3); */
   transform: scale(1) translate(0, 0);
   width: 54rem;
 `
@@ -30,11 +30,11 @@ export const ContainerSeatsRow = styled.div`
 `
 
 interface ContainerSeatsBallProps {
-  $numberrow: number;
-  $containerseatsball: string;
-  $seatsletter: string;
-  $letternumber: string;
   $seatjoinlist: string[];
+  $seatsjoinnumber: string;
+  $seatsjoinnumberuppercase: string;
+  $listassentdif: string[];
+  $listrownamenotappear: string[];
 }
 
 export const ContainerSeatsBall = styled.div<ContainerSeatsBallProps>`
@@ -49,74 +49,28 @@ export const ContainerSeatsBall = styled.div<ContainerSeatsBallProps>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  
-  border-radius: ${props => (props.$numberrow >= 3 && props.$numberrow <= 10 || props.$numberrow === 12 || props.$numberrow === 13 ) && props.$seatsletter === "d" && "15%"};
-  background: ${props => (props.$numberrow >= 3 && props.$numberrow <= 10 || props.$numberrow === 12 || props.$numberrow === 13 ) && props.$seatsletter === "d" && "white"};
-  border: ${props => (props.$numberrow >= 3 && props.$numberrow <= 10 || props.$numberrow === 12 || props.$numberrow === 13 ) &&  props.$seatsletter === "d" && "1px solid #3478c1"}; 
+
+  border-radius: ${props => props.$listassentdif.includes(props.$seatsjoinnumber) && "15%"};
+  background: ${props => props.$listassentdif.includes(props.$seatsjoinnumber) && "white"};
+  border: ${props => props.$listassentdif.includes(props.$seatsjoinnumber) && "1px solid #3478c1"}; 
   
   &:hover {
-    color: white;
-    background: #db8e02;
-
-    border: ${props => (props.$numberrow >= 3 && props.$numberrow <= 10 || props.$numberrow === 12 || props.$numberrow === 13 ) && props.$seatsletter === "d" && "none"}; 
-
-    background: ${props => (props.$numberrow === 1 || props.$numberrow === 18 || props.$numberrow === 19) && props.$containerseatsball === "notappear" && "none"};
-    color: ${props => (props.$numberrow === 1 || props.$numberrow === 18 || props.$numberrow === 19) && props.$containerseatsball === "notappear" && "none"};
-
-    background: ${props =>  props.$numberrow >= 22 && (props.$seatsletter === "i" || props.$seatsletter === "h" || props.$seatsletter === "g" || props.$seatsletter === "f" || props.$seatsletter === "e" || props.$seatsletter === "d") && "none"};
-    color: ${props => props.$numberrow >= 22 && (props.$seatsletter === "i" || props.$seatsletter === "h" || props.$seatsletter === "g" || props.$seatsletter === "f" || props.$seatsletter === "e" || props.$seatsletter === "d") && "none"};
-
-    background: ${props => (props.$seatsletter === "c" || props.$seatsletter === "b" || props.$seatsletter === "a") && props.$numberrow === 20 && "none"};
-    color: ${props => (props.$seatsletter === "c" || props.$seatsletter === "b" || props.$seatsletter === "a") && props.$numberrow === 20 && "none"};
-
-    background: ${props => (props.$seatsletter === "d"  || props.$seatsletter === "c" || props.$seatsletter === "b" || props.$seatsletter === "a") && props.$numberrow === 2 && "none"};
-    color: ${props => (props.$seatsletter === "d"  || props.$seatsletter === "c" || props.$seatsletter === "b" || props.$seatsletter === "a") && props.$numberrow === 2 && "none"};
-    
-    background: ${props => props.$seatsletter === "a" && (props.$numberrow === 3 || props.$numberrow === 4 || props.$numberrow === 16 || props.$numberrow === 17 || props.$numberrow === 26) && "none"};
-    color: ${props => props.$seatsletter === "a" && (props.$numberrow === 3 || props.$numberrow === 4 || props.$numberrow === 16 || props.$numberrow === 17 || props.$numberrow === 26) && "none"};
-
-    background: ${props => props.$seatsletter === "d" && (props.$numberrow === 14 || props.$numberrow === 15 || props.$numberrow === 16 || props.$numberrow === 17) && "none"};
-    color: ${props => props.$seatsletter === "d" && (props.$numberrow === 14 || props.$numberrow === 15 || props.$numberrow === 16 || props.$numberrow === 17) && "none"};
+    background: ${props => !props.$listrownamenotappear.includes(props.$seatsjoinnumber) && "#db8e02"};
+    color: ${props => !props.$listrownamenotappear.includes(props.$seatsjoinnumber) && "white"};
   }
   
-  background: ${props => (props.$numberrow === 1 || props.$numberrow === 18|| props.$numberrow === 19) && props.$containerseatsball === "notappear" && "white"};
-  color: ${props => (props.$numberrow === 1 || props.$numberrow === 18 || props.$numberrow === 19) && props.$containerseatsball === "notappear" && "white"};
-  cursor:${props => (props.$numberrow === 1 || props.$numberrow === 18 || props.$numberrow === 19) && props.$containerseatsball === "notappear" && "auto"};
-  user-select: ${props => (props.$numberrow === 1 || props.$numberrow === 18 || props.$numberrow === 19) && props.$containerseatsball === "notappear" && "none"};
+  background: ${props => props.$listrownamenotappear.includes(props.$seatsjoinnumber) && "white"};
+  color: ${props => props.$listrownamenotappear.includes(props.$seatsjoinnumber) && "white"};
+  cursor: ${props => props.$listrownamenotappear.includes(props.$seatsjoinnumber) && "auto"};
+  user-select: ${props => props.$listrownamenotappear.includes(props.$seatsjoinnumber) && "none"};
 
-  background: ${props => props.$numberrow >= 22 && (props.$seatsletter === "i" || props.$seatsletter === "h"|| props.$seatsletter === "g" || props.$seatsletter === "f" || props.$seatsletter === "e" || props.$seatsletter === "d") && "white"};
-  color: ${props => props.$numberrow >= 22 && (props.$seatsletter === "i" || props.$seatsletter === "h"|| props.$seatsletter === "g" || props.$seatsletter === "f" || props.$seatsletter === "e" || props.$seatsletter === "d") && "white"};
-  cursor:${props => props.$numberrow >= 22 && (props.$seatsletter === "i" || props.$seatsletter === "h"|| props.$seatsletter === "g" || props.$seatsletter === "f" || props.$seatsletter === "e" || props.$seatsletter === "d") && "auto"};
-  user-select: ${props => props.$numberrow >= 22 && (props.$seatsletter === "i" || props.$seatsletter === "h"|| props.$seatsletter === "g" || props.$seatsletter === "f" || props.$seatsletter === "e" || props.$seatsletter === "d") && "none"};
-
-  background: ${props => (props.$seatsletter === "c" || props.$seatsletter === "b" || props.$seatsletter === "a") && props.$numberrow === 20 && "white"};
-  color: ${props => (props.$seatsletter === "c" || props.$seatsletter === "b" || props.$seatsletter === "a") && props.$numberrow === 20 && "white"};
-  cursor:${props => (props.$seatsletter === "c" || props.$seatsletter === "b" || props.$seatsletter === "a") && props.$numberrow === 20 && "auto"};
-  user-select: ${props => (props.$seatsletter === "c" || props.$seatsletter === "b" || props.$seatsletter === "a") && props.$numberrow === 20 && "none"};
-
-  background: ${props => (props.$seatsletter === "d"  || props.$seatsletter === "c" || props.$seatsletter === "b" || props.$seatsletter === "a") && props.$numberrow === 2 && "white"};
-  color: ${props => (props.$seatsletter === "d"  || props.$seatsletter === "c" || props.$seatsletter === "b" || props.$seatsletter === "a") && props.$numberrow === 2 && "white"};
-  cursor:${props => (props.$seatsletter === "d"  || props.$seatsletter === "c" || props.$seatsletter === "b" || props.$seatsletter === "a") && props.$numberrow === 2 && "auto"};
-  user-select: ${props => (props.$seatsletter === "d"  || props.$seatsletter === "c" || props.$seatsletter === "b" || props.$seatsletter === "a") && props.$numberrow === 2 && "none"};
- 
-  background: ${props => props.$seatsletter === "a" && (props.$numberrow === 3 || props.$numberrow === 4 || props.$numberrow === 16 || props.$numberrow === 17 || props.$numberrow === 26) && "white"};
-  color: ${props => props.$seatsletter === "a" && (props.$numberrow === 3 || props.$numberrow === 4 || props.$numberrow === 16 || props.$numberrow === 17 || props.$numberrow === 26) && "white"};
-  cursor:${props => props.$seatsletter === "a" && (props.$numberrow === 3 || props.$numberrow === 4 || props.$numberrow === 16 || props.$numberrow === 17 || props.$numberrow === 26) && "auto"};
-  user-select: ${props => props.$seatsletter === "a" && (props.$numberrow === 3 || props.$numberrow === 4 || props.$numberrow === 16 || props.$numberrow === 17 || props.$numberrow === 26) && "none"};
-
-  background: ${props => props.$seatsletter === "d" && (props.$numberrow === 14 || props.$numberrow === 15 || props.$numberrow === 16 || props.$numberrow === 17) && "white"};
-  color: ${props => props.$seatsletter === "d" && (props.$numberrow === 14 || props.$numberrow === 15 || props.$numberrow === 16 || props.$numberrow === 17) && "white"};
-  cursor:${props => props.$seatsletter === "d" && (props.$numberrow === 14 || props.$numberrow === 15 || props.$numberrow === 16 || props.$numberrow === 17) && "auto"};
-  user-select: ${props => props.$seatsletter === "d" && (props.$numberrow === 14 || props.$numberrow === 15 || props.$numberrow === 16 || props.$numberrow === 17) && "none"};
-
-  color: ${props => props.$seatjoinlist.includes(props.$letternumber) && "white"};
-  background: ${props => props.$seatjoinlist.includes(props.$letternumber) && "#db8e02"};
+  background: ${props => props.$seatjoinlist.includes(props.$seatsjoinnumberuppercase) && "#db8e02"};
+  color: ${props => props.$seatjoinlist.includes(props.$seatsjoinnumberuppercase) && "white"};
 `
 
 export const ContainerNameNumberRow = styled.div`
   display: flex;
   align-items: center;
-  /* gap: 5px; */
 `
 
 export const ContainerNumberRow = styled.div``
@@ -141,4 +95,24 @@ export const ContainerScreen = styled.div`
   color: white;
   padding: 1px;
   font-size: 14px;
+`
+
+interface ContainerBallProps {
+  $ball: string;
+}
+
+export const ContainerBall = styled.div<ContainerBallProps>`
+  background: ${props => props.$ball === "3" && "#dbdbdb"};
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+  svg {
+    width: ${props => props.$ball === "3" && "10px"};
+    height: ${props => props.$ball === "3" && "10px"};
+  }
 `

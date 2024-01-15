@@ -3,11 +3,15 @@ import { Theme } from '../../../Style/theme';
 
 export const FirstContainer = styled.div`
   width: 50%;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
 `
 
 export const ContainerHomeLocation = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 30px;
 `
 
 export const ContainerHome = styled.div`

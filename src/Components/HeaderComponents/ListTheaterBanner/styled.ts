@@ -23,7 +23,7 @@ export const ContainerTheaterMainPoster = styled.div<ContainerTheaterMainPosterP
     left: 0px;
     width: 18%;
     height: 30%;
-    background-image: linear-gradient(to right, #727272, #7272721f);
+    background-image: linear-gradient(to right, #28282878, #28282803);
     opacity: 1;
     z-index: 3;
   }
@@ -36,7 +36,7 @@ export const ContainerTheaterMainPoster = styled.div<ContainerTheaterMainPosterP
     right: 0px;
     width: 18%;
     height: 30%;
-    background-image: linear-gradient(to left, #727272bf, #72727200);
+    background-image: linear-gradient(to left, #28282885, #28282800);
     opacity: 1;
     z-index: 3;
   }

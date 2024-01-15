@@ -1,9 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import WithdrawSvg from '../../../Svg/WithdrawSvg';
 import * as Styled from './styled';
-import { faCaretUp, faCouch, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import TicketSvg from '../../../Svg/TicketSvg';
-import CardSvg from '../../../Svg/CardSvg';
+import {
+  faBowlRice,
+  faCaretUp,
+  faCouch,
+  faCreditCard,
+  faTicketSimple,
+} from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import RedirectUserSvgMovie from '../RedirectUserSvgMovie/RedirectUserSvgMovie';
 import {
@@ -11,10 +14,6 @@ import {
   listProductsProps,
   paymentSelectSeatsProps,
 } from '../../../Templates/Checkout/Checkout';
-import DolarCashSvg from '../../../Svg/DolarCashSvg';
-import SecondPopCornSvg from '../../../Svg/SecondPopCornSvg';
-import TicketInfoChosen from '../TicketInfoChosen/TicketInfoChosen';
-import ProductsInfoChosen from '../ProductsInfoChosen/ProductsInfoChosen';
 import FormsOfWithdrawalAndRemove from '../FormsOfWithdrawalAndRemove/FormsOfWithdrawalAndRemove';
 import SummaryOfTheOrder from '../SummaryOfTheOrder/SummaryOfTheOrder';
 
@@ -28,6 +27,7 @@ interface OptionsMovieProps {
   setCountValueTotalOfAssentsAndProduct: React.Dispatch<React.SetStateAction<number>>;
   setTotalValuePrice: React.Dispatch<React.SetStateAction<number>>;
   setCountOfProduct: React.Dispatch<React.SetStateAction<number>>;
+  setWhatButtonClicked: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const OptionsMovie = ({
@@ -40,10 +40,8 @@ const OptionsMovie = ({
   setCountValueTotalOfAssentsAndProduct,
   setTotalValuePrice,
   setCountOfProduct,
+  setWhatButtonClicked,
 }: OptionsMovieProps) => {
-  const [svgOrdersClicked, setSvgOrdersClicked] = useState(false);
-  const [svgDataPersonal, setSvgDataPersonal] = useState(false);
-  const [svgFormsOfPayment, setSvgFormsOfPayment] = useState(false);
   const [whatClickedButton, setWhatClickedButton] = useState(1);
   const [listNumberAllowed, setListNumberAllowed] = useState([1]);
   const [allTrue, setAllTrue] = useState(false);
@@ -69,6 +67,12 @@ const OptionsMovie = ({
   }, [whatClicked]);
 
   useEffect(() => {
+    if (whatClickedButton === 1) {
+      setWhatButtonClicked(1);
+    } else {
+      setWhatButtonClicked(0);
+    }
+
     if (allTrue) {
       setListNumberAllowed((prev) => [...prev, 3, 4]);
     } else {
@@ -89,6 +93,7 @@ const OptionsMovie = ({
   }, [whatClickedButton, seatJoinList, allTrue]);
 
   const [totalTickets, setTotalTickets] = useState(0);
+  const [stringFullTypeTicked, setStringFullTypeTicked] = useState<string[]>([]);
 
   useEffect(() => {
     let soma = 0.0;
@@ -114,16 +119,20 @@ const OptionsMovie = ({
 
     setTotalTickets(Number(soma.toFixed(2)));
     setTotalValuePrice(Number(soma.toFixed(2)));
+
     if (seatJoinList.length > 0) {
       if (countSeatsMarked === seatJoinList.length) {
         setAllTrue(true);
       } else {
         setAllTrue(false);
       }
+    } else {
+      setAllTrue(false);
+      countSeatsMarked = 0;
+
+      setStringFullTypeTicked([]);
     }
   }, [paymentSelectSeats, listFormPayment, seatJoinList, listProducts]);
-
-  // const [countValueTotalOfAssentsAndProduct, setCountValueTotalOfAssentsAndProduct] = useState(0);
 
   useEffect(() => {
     let countTotal = 0;
@@ -141,8 +150,6 @@ const OptionsMovie = ({
     setCountValueTotalOfAssentsAndProduct(countTotal);
   }, [paymentSelectSeats, listProducts]);
 
-  const [stringFullTypeTicked, setStringFullTypeTicked] = useState<string[]>([]);
-
   useEffect(() => {
     if (paymentSelectSeats) {
       let stringFull = paymentSelectSeats.map((el) => {
@@ -158,8 +165,8 @@ const OptionsMovie = ({
   return (
     <Styled.ContainerOptionsMovie>
       <FormsOfWithdrawalAndRemove />
-      <Styled.ContainerOrdersDatePersonalPayment $svgformsofpayment={String(svgFormsOfPayment)}>
-        <Styled.ContainerInfo $svgformsofpayment={String(svgFormsOfPayment)}>
+      <Styled.ContainerOrdersDatePersonalPayment>
+        <Styled.ContainerInfo>
           <Styled.WrapperSvg
             onClick={handleChoiceOfSeats}
             $wrappersvg="1"
@@ -172,7 +179,6 @@ const OptionsMovie = ({
               svg={<FontAwesomeIcon icon={faCouch} />}
               text={'ESCOLHA DE ASSENTOS'}
               stringFullTypeTicked={[]}
-              svgActive={svgOrdersClicked}
               seatJoinList={seatJoinList}
             />
           </Styled.WrapperSvg>
@@ -190,10 +196,9 @@ const OptionsMovie = ({
             $seatjoinlist={String(seatJoinList)}
           >
             <RedirectUserSvgMovie
-              svg={<TicketSvg />}
+              svg={<FontAwesomeIcon icon={faTicketSimple} />}
               text={'TIPOS DE INGRESSOS'}
               stringFullTypeTicked={stringFullTypeTicked}
-              svgActive={svgDataPersonal}
               seatJoinList={seatJoinList}
             />
           </Styled.WrapperSvg>
@@ -212,10 +217,9 @@ const OptionsMovie = ({
             $seatjoinlist={String(seatJoinList)}
           >
             <RedirectUserSvgMovie
-              svg={<SecondPopCornSvg />}
+              svg={<FontAwesomeIcon icon={faBowlRice} />}
               text={'ADICIONAR PIPOCA AO PEDIDO?'}
               stringFullTypeTicked={[]}
-              svgActive={svgFormsOfPayment}
               seatJoinList={[]}
             />
           </Styled.WrapperSvg>
@@ -234,10 +238,9 @@ const OptionsMovie = ({
             $seatjoinlist={String(seatJoinList)}
           >
             <RedirectUserSvgMovie
-              svg={<CardSvg />}
+              svg={<FontAwesomeIcon icon={faCreditCard} />}
               text={'FORMA DE PAGAMENTO'}
               stringFullTypeTicked={[]}
-              svgActive={svgFormsOfPayment}
               seatJoinList={[]}
             />
           </Styled.WrapperSvg>

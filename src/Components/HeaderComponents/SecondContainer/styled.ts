@@ -5,7 +5,8 @@ export const SecondContainer = styled.div`
   display: flex;
   width: 50%;
   align-items: center;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
+  justify-content: center;
   gap: 30px;
 `
 

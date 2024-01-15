@@ -28,7 +28,7 @@ const PopcornSelect = ({
 
   useEffect(() => {
     if (checkoutMovie === null) return;
-    fetchGetAllFoodAdditional(checkoutMovie.id);
+    fetchGetAllFoodAdditional(checkoutMovie.movieId);
   }, [checkoutMovie]);
 
   const fetchGetAllFoodAdditional = async (movieId: string) => {

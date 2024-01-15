@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { listSeatsMarked } from '../../../Templates/Checkout/Checkout';
 
 export const ContainerTicketTypes = styled.div`
-  width: 64%;
-  
+  /* width: 64%; */
+  width: 63rem;
 `
 
 export const ContainerClubUol = styled.div`
@@ -70,7 +70,6 @@ interface WrapperSeatsChosenProps {
 
 export const WrapperSeatsChosen = styled.div<WrapperSeatsChosenProps>`
   background: #c8c8c8;
-  /* padding: 5px; */
   width: 25px;
   height: 25px;
   border-radius: 50%;
@@ -79,7 +78,6 @@ export const WrapperSeatsChosen = styled.div<WrapperSeatsChosenProps>`
   align-items: center;
   justify-content: center;
   font-size: 11px;
-  /* cursor: pointer; */
   cursor: ${props => props.$paymentkeyvalue[props.$formname].map((ea) => ea.nameSeat === props.$sea && ea.isSelect === 0) ? "pointer" : "no-drop"};
   background: ${props => props.$paymentkeyvalue[props.$formname].some((ea) => ea.nameSeat === props.$sea && ea.isSelect === 0) && "#3478c1"};
   background: ${props => props.$paymentkeyvalue[props.$formname].some((ea) => ea.nameSeat === props.$sea && ea.isSelect === 1) && "#db8e02"};
@@ -87,15 +85,7 @@ export const WrapperSeatsChosen = styled.div<WrapperSeatsChosenProps>`
  
   cursor: ${props => props.$paymentkeyvalue[props.$formname].some((ea) => ea.nameSeat === props.$sea && ea.isSelect === 2) && "no-drop"};
   user-select: none;
-  `
-
-   /* cursor: ${props => props.$formname === props.$se.namePayment &&  props.$se.isSelect === true && "pointer"};
-  cursor: ${props => props.$formname === props.$se.namePayment &&  props.$se.isSelect === true && "pointer"}; */
-  /* cursor: ${props => props.$formname === props.$se.namePayment &&  props.$se.isSelect === true ? "pointer" :  "no-drop"}; */
-
-  /* background: ${props => props.$numberseats === props.$whichwaschosennamber && "#ed9900"}; */
-  /* background: ${props => props.$whichwaschosennamber > props.$numberseats && "#ed9900"}; */
-  /* background: ${props =>  props.$seatsmarked.includes(props.$seats) ?"#ed9900" :  "#c8c8c8"}; */
+`
 
 export const ContainerForm = styled.div`
   border-bottom: 1px solid #8888881f;

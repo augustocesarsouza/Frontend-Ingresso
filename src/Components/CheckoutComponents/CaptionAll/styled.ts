@@ -27,8 +27,6 @@ export const Span = styled.span<SpanProps>`
 
   color: ${props => props.$span === "2" && "gray"};
   font-size: ${props => props.$span === "2" && "13px"};
-
-
 `
 
 export const ContainerInfoCaptionMain = styled.div`
@@ -83,7 +81,5 @@ export const ContainerBall = styled.div<ContainerBallProps>`
     color: ${props => props.$ball === "5" && "gray"};
     width: ${props => props.$ball === "5" && "14px"};
     height: ${props => props.$ball === "5" && "14px"};
-
-
   }
 `

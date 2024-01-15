@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import LocationSvg from '../../../Svg/LocationSvg';
 import * as Styled from './styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,6 +6,8 @@ import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import GpsSvg from '../../../Svg/GpsSvg';
 import DownArrowSvg from '../../../Svg/DownArrowSvg';
 import ChangeLocationSvg from '../../../Svg/ChangeLocationSvg';
+import { ContextHome, ContextHomeProps } from '../../../Templates/Home/Home';
+import { useNavigate } from 'react-router-dom';
 
 interface FirstContainerProps {
   openChooseLocation: boolean;
@@ -26,6 +28,7 @@ const FirstContainer = ({
   const [listCity, setListCity] = useState<null | string[]>(null);
   const [LastLocation, setLastLocation] = useState('Campinas');
   const refSelectCity = useRef<HTMLSelectElement | null>(null);
+  const nav = useNavigate();
 
   const handleLocation = () => {
     setOpenChooseLocation((prev) => !prev);
@@ -71,10 +74,18 @@ const FirstContainer = ({
     }
   }, []);
 
+  const useContextHome = useContext<ContextHomeProps | null>(ContextHome);
+
+  const handleClickImgIngresso = () => {
+    if (useContextHome.userObj === null) return;
+
+    nav('/', { state: { user: useContextHome.userObj } });
+  };
+
   return (
     <Styled.FirstContainer>
       <Styled.ContainerHomeLocation>
-        <Styled.ContainerHome>
+        <Styled.ContainerHome onClick={handleClickImgIngresso}>
           <Styled.HomeLink>
             <Styled.ImgIngresso
               src="https://res.cloudinary.com/dyqsqg7pk/image/upload/v1698064983/IngressoImg/ingressologoTrans_in34qn.png"

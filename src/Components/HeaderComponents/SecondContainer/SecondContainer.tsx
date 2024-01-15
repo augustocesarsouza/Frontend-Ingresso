@@ -62,6 +62,7 @@ const SecondContainer = () => {
 
   const handleMyOrders = () => {
     if (useContextHome.userObj === null) return;
+
     nav('/minha-conta/meus-pedidos', { state: { user: useContextHome.userObj } });
   };
 

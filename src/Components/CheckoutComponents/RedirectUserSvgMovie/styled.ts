@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
-interface ContainerSvgSpanProps {
-  $svgactive: string;
-}
 
-export const ContainerSvgSpan = styled.div<ContainerSvgSpanProps>`
+
+export const ContainerSvgSpan = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
@@ -12,42 +10,34 @@ export const ContainerSvgSpan = styled.div<ContainerSvgSpanProps>`
   background: #80808021;
   border-left: 5px solid #039de2;
   cursor: pointer;
-  background: ${props => props.$svgactive === "true" && "rgb(255, 115, 0)"};
-  border-left: ${props => props.$svgactive === "true" && "none"};
   gap: 8px;
 `
 
-interface ContainerSvgProps {
-  $svgactive: string;
-}
-
-export const ContainerSvg = styled.div<ContainerSvgProps>`
+export const ContainerSvg = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   svg {
     display: block;
-    min-height: 33px;
-    fill: ${props => props.$svgactive === "true" && "#ffffff"};
+    width: 25px;
+    height: 25px;
   }
 `
 
-interface SpanProps {
-  $svgactive: string;
-}
 
-export const P = styled.p<SpanProps>`
+
+export const P = styled.p`
   color: #2196F3;
   font-size: 15px;
   text-align: center;
   display: block;
-  color: ${props => props.$svgactive === "true" && "#ffffff"};
 `
 
-export const Span = styled.span<SpanProps>`
-  /* color: #2196F3; */
+export const Span = styled.span`
   font-size: 15px;
   text-align: center;
   display: block;
-  color: ${props => props.$svgactive === "true" && "#ffffff"};
 `
 
 export const ContainerChoiceSeats = styled.div`

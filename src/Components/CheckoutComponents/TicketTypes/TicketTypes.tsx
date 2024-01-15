@@ -22,6 +22,8 @@ const TicketTypes = ({
   paymentKeyValue,
   handleClickSeats,
 }: TicketTypesProps) => {
+  // console.log(paymentKeyValue);
+
   return (
     <>
       {whatClicked === 2 && (

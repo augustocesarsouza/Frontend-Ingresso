@@ -1,18 +1,21 @@
-import { faArrowsLeftRight, faBan, faList, faWheelchair } from '@fortawesome/free-solid-svg-icons';
 import MovieSeats from '../MovieSeats/MovieSeats';
 import * as Styled from './styled';
 import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import UserSvg from '../../../Svg/UserSvg';
 import CaptionAll from '../CaptionAll/CaptionAll';
 
 interface ChoiceSeatsProps {
   whatClicked: number;
   seatJoinList: string[];
+  ticketsSeats: string[];
   handleSeatClicked: (seat: number, rowName: string) => void;
 }
 
-const ChoiceSeats = ({ whatClicked, seatJoinList, handleSeatClicked }: ChoiceSeatsProps) => {
+const ChoiceSeats = ({
+  whatClicked,
+  seatJoinList,
+  ticketsSeats,
+  handleSeatClicked,
+}: ChoiceSeatsProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [initialY, setInitialY] = useState(0);
   const [topValue, setTopValue] = useState(81);
@@ -79,10 +82,6 @@ const ChoiceSeats = ({ whatClicked, seatJoinList, handleSeatClicked }: ChoiceSea
     };
   }, [isDragging, mouseEnterOrLeaveZoom]);
 
-  useEffect(() => {
-    console.log(barIncreases);
-  }, [barIncreases]);
-
   return (
     <>
       {whatClicked === 1 && (
@@ -92,8 +91,9 @@ const ChoiceSeats = ({ whatClicked, seatJoinList, handleSeatClicked }: ChoiceSea
           </Styled.ContainerTopYourSeats>
           <MovieSeats
             barIncreases={barIncreases}
-            handleSeatClicked={handleSeatClicked}
             seatJoinList={seatJoinList}
+            ticketsSeats={ticketsSeats}
+            handleSeatClicked={handleSeatClicked}
             setMouseEnterOrLeaveZoom={setMouseEnterOrLeaveZoom}
           />
           <Styled.ContainerParaIncreases>
