@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const ContainerMain = styled.div`
+  background: #282828fa;
 `
 
 export const ContainerFirstHeader = styled.div`
@@ -35,6 +36,7 @@ export const Li = styled.li`
 
 export const ContainerTrendingDown = styled.div`
   /* height: 100vh; // tirar isso depois qq coisa */
+  /* margin-bottom: 10px; */
 `
 
 export const ContainerSection = styled.div`

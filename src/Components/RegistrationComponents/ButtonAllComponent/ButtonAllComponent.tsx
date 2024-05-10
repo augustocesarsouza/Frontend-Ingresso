@@ -4,7 +4,8 @@ import { Url } from '../../../Utils/Url';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import XExitSvg from '../../../Svg/XExitSvg';
-import { objUpdateRegisterUser } from '../../MyOrdersComponents/DataPersonalChange/DataPersonalChange';
+import { objUpdateRegisterUser } from '../../DataPersonalComponents/DataPersonalChange/DataPersonalChange';
+
 import ExclamationMark from '../../../Svg/ExclamationMark';
 import {
   ContextMyOrders,
@@ -107,23 +108,26 @@ const ButtonAllComponent = ({
       const obj = {
         name: valueOfName,
         email: valueOfEmail,
-        Cpf: valueOfCpf,
-        Password: valueOfPassword,
-        BirthDateString: birthday,
-        Phone: phone,
-        Gender: gender,
-        Cep: cep,
-        Logradouro: logradouro,
-        Numero: numero,
-        Complemento: complemento,
-        Referencia: referencia,
-        Bairro: bairro,
-        Estado: estado,
-        Cidade: cidade,
+        cpf: valueOfCpf,
+        password: valueOfPassword,
+        birthDateString: birthday,
+        gender: gender,
+        phone: phone,
+        cep: cep,
+        logradouro: logradouro,
+        numero: numero,
+        complemento: complemento,
+        referencia: referencia,
+        bairro: bairro,
+        estado: estado,
+        cidade: cidade,
       };
+
+      console.log(obj);
+
       if (clickContinue) {
         const CreateAccount = async () => {
-          const res = await fetch(`${Url}/user/create`, {
+          const res = await fetch(`${Url}/public/user/create`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -133,6 +137,8 @@ const ButtonAllComponent = ({
           if (res.status === 200) {
             setWarnConfirmEmail(true);
           }
+
+          console.log(res);
         };
         CreateAccount();
       }
@@ -240,6 +246,7 @@ const ButtonAllComponent = ({
         const json = await res.json();
         const message = json.message;
         if (message === 'password is not valid') {
+          // cuidado tem que tratar o null
           setSenhaInvalida(false);
         }
       }
@@ -250,6 +257,7 @@ const ButtonAllComponent = ({
       }
 
       if (res.status === 401) {
+        //cuidado tem um 403
         nav('/');
         localStorage.removeItem('token');
       }

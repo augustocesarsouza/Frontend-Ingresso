@@ -25,8 +25,6 @@ export const ContainerSvg = styled.div`
   }
 `
 
-
-
 export const P = styled.p`
   color: #2196F3;
   font-size: 15px;

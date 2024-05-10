@@ -2,7 +2,7 @@ import * as Styled from './styled';
 import { useState, useEffect, useRef } from 'react';
 import InputWarning from '../InputWarning/InputWarning';
 import EmailSvg from '../../../Svg/EmailSvg';
-import * as signalR from '@microsoft/signalr';
+// import * as signalR from '@microsoft/signalr';
 
 interface EmailAndConfirmEmailProps {
   verifyFields: boolean;
@@ -30,42 +30,42 @@ const EmailAndConfirmEmail = ({
 
   const refInputEmail = useRef<HTMLInputElement | null>(null);
   const refInputConfirmEmail = useRef<HTMLInputElement | null>(null);
-  const [connection, setConnection] = useState<signalR.HubConnection | null>(null);
+  // const [connection, setConnection] = useState<signalR.HubConnection | null>(null);
   const [existEmail, setExistEmail] = useState(false);
 
-  const startConnection = async () => {
-    const newConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7456/generalhub')
-      .build();
+  // const startConnection = async () => {
+  //   const newConnection = new signalR.HubConnectionBuilder()
+  //     .withUrl('https://localhost:7456/generalhub')
+  //     .build();
 
-    try {
-      await newConnection.start();
-      setConnection(newConnection);
-    } catch (error) {
-      console.error('Error establishing SignalR connection', error);
-    }
-  };
+  //   try {
+  //     await newConnection.start();
+  //     setConnection(newConnection);
+  //   } catch (error) {
+  //     console.error('Error establishing SignalR connection', error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (connection === null) {
-      startConnection();
-    }
-  }, [connection]);
+  // useEffect(() => {
+  //   if (connection === null) {
+  //     startConnection();
+  //   }
+  // }, [connection]);
 
-  useEffect(() => {
-    if (connection === null) return;
-    if (valueInputEmail.includes('@gmail.com')) {
-      connection.invoke('CheckEmailAlreadyExists', valueInputEmail);
-    }
+  // useEffect(() => {
+  //   if (connection === null) return;
+  //   if (valueInputEmail.includes('@gmail.com')) {
+  //     connection.invoke('CheckEmailAlreadyExists', valueInputEmail);
+  //   }
 
-    connection.on('email-check-result', (exists: boolean) => {
-      if (exists) {
-        setExistEmail(true);
-      } else {
-        setExistEmail(false);
-      }
-    });
-  }, [connection, valueInputEmail]);
+  //   connection.on('email-check-result', (exists: boolean) => {
+  //     if (exists) {
+  //       setExistEmail(true);
+  //     } else {
+  //       setExistEmail(false);
+  //     }
+  //   });
+  // }, [connection, valueInputEmail]);
 
   useEffect(() => {
     if (verifyFields) {

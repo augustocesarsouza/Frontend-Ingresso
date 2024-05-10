@@ -14,6 +14,7 @@ export const ContainerTheaterMainPoster = styled.div<ContainerTheaterMainPosterP
   margin-bottom: 30px;
   margin-left: 7px;
   user-select: none;
+  padding-bottom: 30px;
 
   &::before {
     display: ${props => props.$arrowdisableleft === "true" && "none"};

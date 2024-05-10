@@ -4,9 +4,14 @@ import * as Styled from './styled';
 interface RankingLegendaVipSecondProps {
   el: cinemaMovieProps;
   listHoursKeyValue: { [key: number]: string[] };
+  handleClickHourMovie: (hour: string, el: cinemaMovieProps) => void;
 }
 
-const RankingLegendaVipSecond = ({ el, listHoursKeyValue }: RankingLegendaVipSecondProps) => {
+const RankingLegendaVipSecond = ({
+  el,
+  listHoursKeyValue,
+  handleClickHourMovie,
+}: RankingLegendaVipSecondProps) => {
   return (
     <>
       {el.cinemaDTO.ranking == 'LEGENDADO,VIP' && (
@@ -17,8 +22,8 @@ const RankingLegendaVipSecond = ({ el, listHoursKeyValue }: RankingLegendaVipSec
           </Styled.ContainerRanking>
           <Styled.ContainerAll>
             {listHoursKeyValue !== null &&
-              listHoursKeyValue[el.cinemaDTO.ranking].map((hour, i) => (
-                <Styled.ContainerHoursMain key={i}>
+              listHoursKeyValue[el.cinemaDTO.id].map((hour, i) => (
+                <Styled.ContainerHoursMain key={i} onClick={() => handleClickHourMovie(hour, el)}>
                   {hour.includes('LV') && (
                     <Styled.ContainerHours>
                       <Styled.PHour $p="1">{hour.slice(0, 6)}</Styled.PHour>

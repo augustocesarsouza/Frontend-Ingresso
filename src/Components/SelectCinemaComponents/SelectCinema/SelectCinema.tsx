@@ -1,6 +1,6 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import * as Styled from './styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Url } from '../../../Utils/Url';
 import FirstContainer from '../../HeaderComponents/FirstContainer/FirstContainer';
 import SecondContainer from '../../HeaderComponents/SecondContainer/SecondContainer';
@@ -34,16 +34,35 @@ const SelectCinema = () => {
   const [movieSelected, setMovieSelected] = useState<movieSelectedProps | null>(null);
   const [userObj, setUserObj] = useState<ObjUser | null>(null);
   const location = useLocation();
+  const nav = useNavigate();
 
   useEffect(() => {
-    const id = location.state;
     setUserObj(location.state.user);
 
-    fetchInfoMovie(id.id);
-  }, [location]);
+    const movieId = location.state.movieId;
+    fetchInfoMovie(movieId, location.state.user);
+  }, [location.pathname]);
 
-  const fetchInfoMovie = async (id: string) => {
-    const res = await fetch(`${Url}/movie/info/${id}`);
+  const fetchInfoMovie = async (movieId: string, user: ObjUser) => {
+    const token = localStorage.getItem('token');
+
+    if (token == null || token.length <= 0) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
+    const res = await fetch(`${Url}/movie/info/${movieId}`, {
+      headers: {
+        uid: user.id,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (res.status === 403) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
     if (res.status === 200) {
       const json = await res.json();
       const data = json.data;

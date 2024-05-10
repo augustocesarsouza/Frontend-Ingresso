@@ -87,12 +87,11 @@ const ListMovieBanner = ({ moviesBanner }: ListMovieBannerProps) => {
       .replace(/[\u0300-\u036f]/g, '') // Remove diacríticos
       .replace(/[^\w\s]/g, '') // Remove caracteres especiais, exceto letras, números e espaços
       .replace(/\s+/g, '-'); // Substitui espaços por traços
-    let user;
-    if (location.state !== null) {
-      user = location.state.user;
-    }
 
-    nav(`/filme/${titleFormatted}`, { state: { id: id, user } });
+    if (location.state !== null) {
+      const user = location.state.user;
+      nav(`/filme/${titleFormatted}`, { state: { movieId: id, user } });
+    }
   };
 
   return (

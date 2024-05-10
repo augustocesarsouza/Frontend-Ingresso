@@ -16,7 +16,8 @@ const TrendingBannerMovie = () => {
   useEffect(() => {
     const GetAllMoviePerRegion = async () => {
       const region = 'São Paulo';
-      const res = await fetch(`${Url}/movie/get-all-region/${region}`);
+      // const res = await fetch(`${Url}/movie/get-all-region/${region}`);c#
+      const res = await fetch(`${Url}/public/movie/get-all-region/${region}`);
 
       if (res.status === 200) {
         const json = await res.json();

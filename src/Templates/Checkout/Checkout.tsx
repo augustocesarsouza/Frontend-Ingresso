@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import * as Styled from './styled';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import TopPartCheckout from '../../Components/CheckoutComponents/TopPartCheckout/TopPartCheckout';
@@ -68,6 +68,7 @@ const Checkout = () => {
   const location = useLocation();
   const [user, setUser] = useState<User | null>(null);
   const [checkoutMovie, setCheckoutMovie] = useState<CheckoutMovie | null>(null);
+  const nav = useNavigate();
 
   useEffect(() => {
     if (location.state === null) return;
@@ -129,7 +130,25 @@ const Checkout = () => {
   }, [checkoutMovie]);
 
   const fetchFormsPayment = async (movieId: string) => {
-    const res = await fetch(`${Url}/formofpayment/get-form/${movieId}`);
+    const token = localStorage.getItem('token');
+
+    if (token == null || token.length <= 0) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
+    const res = await fetch(`${Url}/form-of-payment/get-form/${movieId}`, {
+      headers: {
+        uid: user.id,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (res.status === 403) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
     if (res.status === 200) {
       const json = await res.json();
       setListFormPayment(json.data);
@@ -150,9 +169,28 @@ const Checkout = () => {
   const [ticketsSeats, setTicketsSeats] = useState<string[]>([]);
 
   const fetchGetByMovieIdAndCinemaId = async (movieId: string, cinemaId: string) => {
+    const token = localStorage.getItem('token');
+
+    if (token == null || token.length <= 0) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
     const res = await fetch(
-      `${Url}/movieregiontickets/getbymovieidandcinemaid/${movieId}/${cinemaId}`
+      `${Url}/movie-region-tickets/get-by-movieid-and-cinemaid/${movieId}/${cinemaId}`,
+      {
+        headers: {
+          uid: user.id,
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
+
+    if (res.status === 403) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
     if (res.status === 200) {
       const json = await res.json();
       const ticketsSeats: string = json.data.ticketsSeats;
@@ -297,13 +335,29 @@ const Checkout = () => {
       MovieId: checkoutMovie.movieId,
       CinemaId: checkoutMovie.cinemaId,
     };
-    const res = await fetch(`${Url}/movieregiontickets/update`, {
+
+    const token = localStorage.getItem('token');
+
+    if (token == null || token.length <= 0) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
+    const res = await fetch(`${Url}/movie-region-tickets/update`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        uid: user.id,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(seat),
     });
+
+    if (res.status === 403) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
     if (res.status === 200) {
       const json = await res.json();
       const data: MovieRegionTickets = json.data;
@@ -425,7 +479,7 @@ const Checkout = () => {
   };
 
   return (
-    <Styled.ContainerMain onClick={handleClickDivMain}>
+    <Styled.ContainerMain onClick={handleClickDivMain} $whatclicked={whatClicked}>
       <TopPartCheckout
         user={user}
         clickDivMain={clickDivMain}
@@ -468,6 +522,7 @@ const Checkout = () => {
           />
 
           <PopcornSelect
+            user={user}
             checkoutMovie={checkoutMovie}
             whatClicked={whatClicked}
             listProducts={listProducts}

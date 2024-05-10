@@ -139,19 +139,27 @@ const DataPersonalChange = ({ svgDataPersonal }: DataPersonalChangeProps) => {
   const GetInfoUser = async (id: string) => {
     const token = localStorage.getItem('token');
 
-    if (token === null || token.length <= 0) {
-      nav('/');
+    if (token == null || token.length <= 0) {
+      nav('/', { state: { user: null } });
+      return;
     }
 
     const res = await fetch(`${Url}/info-user/${id}`, {
       headers: {
+        uid: id,
         Authorization: `Bearer ${token}`,
       },
     });
 
+    if (res.status === 403) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
     if (res.status === 401) {
-      nav('/');
+      nav('/', { state: { user: null } });
       localStorage.removeItem('token');
+      return;
     }
 
     if (res.status === 200) {
@@ -220,6 +228,9 @@ const DataPersonalChange = ({ svgDataPersonal }: DataPersonalChangeProps) => {
       setNumber(phone.slice(3, 12));
     }
   }, [phone]);
+
+  console.log('aquiiiiiiiiiiii');
+  console.log(dd);
 
   const countReturn = useRef(0);
 

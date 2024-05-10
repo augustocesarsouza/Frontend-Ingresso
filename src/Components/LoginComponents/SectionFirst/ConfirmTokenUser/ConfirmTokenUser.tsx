@@ -43,7 +43,7 @@ const ConfirmTokenUser = ({ confirmTokenEmail, setConfirmTokenEmail }: ConfirmTo
   }, [location, entered]);
 
   const confirmTokenUserr = async (token: string) => {
-    const res = await fetch(`${Url}/user/confirm-token/${token}`);
+    const res = await fetch(`${Url}/public/user/confirm-token/${token}`);
 
     if (res.status === 200) {
       setConfirmTokenEmail(true);

@@ -9,6 +9,8 @@ interface RankingProps {
 }
 
 const Ranking = ({ el, listHoursKeyValue, handleClickHourMovie, rankingType }: RankingProps) => {
+  // console.log(listHoursKeyValue);
+
   const renderRanking = (rankingLabel: string) => (
     <Styled.ContainerHoursRanking>
       <Styled.ContainerRanking>
@@ -16,7 +18,7 @@ const Ranking = ({ el, listHoursKeyValue, handleClickHourMovie, rankingType }: R
       </Styled.ContainerRanking>
       <Styled.ContainerAll>
         {listHoursKeyValue !== null &&
-          listHoursKeyValue[rankingType].map((hour, i) => (
+          listHoursKeyValue[el.cinemaDTO.id].map((hour, i) => (
             <Styled.ContainerHoursMain key={i} onClick={() => handleClickHourMovie(hour, el)}>
               {hour.includes('D') && (
                 <Styled.ContainerHours>

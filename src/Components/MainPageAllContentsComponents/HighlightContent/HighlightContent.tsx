@@ -21,7 +21,7 @@ const HighlightContent = () => {
 
     const GetHighlightMovie = async () => {
       const statusMovie = 'Highlight';
-      const res = await fetch(`${Url}/movie/get-status-movie/${statusMovie}`);
+      const res = await fetch(`${Url}/public/movie/get-status-movie/${statusMovie}`);
 
       if (res.status === 200) {
         const json = await res.json();

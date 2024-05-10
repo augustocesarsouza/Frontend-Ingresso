@@ -39,9 +39,12 @@ const Form = () => {
   const [objUser, setObjUser] = useState<ObjUser | null>(null);
 
   const loginAccount = async (emailOrCpf: string, password: string) => {
-    const res = await fetch(`${Url}/user/login/${emailOrCpf}/${password}`);
+    const res = await fetch(`${Url}/public/user/login/${emailOrCpf}/${password}`);
+
     if (res.status === 200) {
+      console.log(res);
       const json = await res.json();
+
       const data = json.data;
 
       const userObj = {
@@ -61,12 +64,14 @@ const Form = () => {
   };
 
   const handleEnter = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    // Confirmar Cod, Sent to the Email
     e.preventDefault();
 
     setLoading(true);
     setConfirmCodeEmail(false);
 
-    const res = await fetch(`${Url}/user/verific/${valueInputCode}/${idUserRef}`);
+    const res = await fetch(`${Url}/public/user/verific/${valueInputCode}/${idUserRef}`);
+
     if (res.status === 200) {
       setTimeout(() => {
         setLoading(false);
@@ -77,8 +82,8 @@ const Form = () => {
     if (res.status === 400) {
       setTimeout(() => {
         setLoading(false);
-        // setErrorValidToken400(true); descomenda depois
-        setErrorValidToken(false);
+        setErrorValidToken400(true); //descomenda depois
+        // setErrorValidToken(false);
       }, 1000);
     }
   };
@@ -87,12 +92,12 @@ const Form = () => {
     if (!errorValidToken && objUser !== null) {
       nav('/', { state: { user: objUser } });
     }
-  }, [errorValidToken]);
+  }, [errorValidToken, objUser]);
 
   const [resentCode, setResentCode] = useState(false);
 
   const handleResendCode = async () => {
-    const res = await fetch(`${Url}/user/resend-code`, {
+    const res = await fetch(`${Url}/public/user/resend-code`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -80,8 +80,8 @@ export const WrapperSvg = styled.div<WrapperSvgProps>`
     font-weight:  ${props => props.$wrappersvg === props.$whatclickedbutton ? "500" : "400"};
     font-size: 14px;
 
-    color: ${props =>  props.$whatclickedbutton === "1" && "white"};
-    color: ${props =>  props.$whatclickedbutton >= "2" && "white"};
+    color: ${props =>  props.$whatclickedbutton === "1" && "#c9c9c9"};
+    color: ${props =>  props.$whatclickedbutton >= "2" && "#c9c9c9"};
     
     color: ${props => props.$wrappersvg === "1" && props.$whatclickedbutton !== "1" && "#03a9f4"};
     color:  ${props => props.$whatclickedbutton !== "2" && (props.$wrappersvg === "2" && props.$seatjoinlist.length > 0) && "#15aaed"};

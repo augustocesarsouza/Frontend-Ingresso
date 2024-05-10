@@ -35,7 +35,7 @@ const TheatresBanner = () => {
 
     const fetchTheatreData = async () => {
       const statusMovie = 'São Paulo';
-      const res = await fetch(`${Url}/theatre/get-all-region/${statusMovie}`);
+      const res = await fetch(`${Url}/public/theatre/get-all-region/${statusMovie}`);
 
       if (res.status === 200) {
         const json = await res.json();
@@ -46,7 +46,7 @@ const TheatresBanner = () => {
       }
     };
     fetchTheatreData();
-  }, [dataTheatre]);
+  }, []);
 
   const [arrayTheatreNew, setArrayTheatreNew] = useState<ArrayTheatreNewProps[] | []>([]);
 

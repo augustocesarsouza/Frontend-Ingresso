@@ -23,6 +23,8 @@ const WelcomeUser = ({ setDataPersonClicked }: WelcomeUserProps) => {
     }
   }, [svgDataPersonal]);
 
+  console.log('WelcomeUser');
+
   return (
     <Styled.ContainerSecond>
       <Styled.ContainerInfoNav

@@ -1,8 +1,9 @@
 import * as Styled from './styled';
 import { useState, useEffect } from 'react';
 import { Url } from '../../../Utils/Url';
-import { CheckoutMovie, listProductsProps } from '../../../Templates/Checkout/Checkout';
+import { CheckoutMovie, User, listProductsProps } from '../../../Templates/Checkout/Checkout';
 import ListFoodAdditional from '../ListFoodAdditional/ListFoodAdditional';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export interface listFoodAdditionalProps {
   fee: string;
@@ -12,6 +13,7 @@ export interface listFoodAdditionalProps {
 }
 
 interface PopcornSelectProps {
+  user: User;
   whatClicked: number;
   checkoutMovie: CheckoutMovie;
   listProducts: listProductsProps[];
@@ -19,12 +21,15 @@ interface PopcornSelectProps {
 }
 
 const PopcornSelect = ({
+  user,
   whatClicked,
   checkoutMovie,
   listProducts,
   setListProducts,
 }: PopcornSelectProps) => {
   const [listFoodAdditional, setListFoodAdditional] = useState<listFoodAdditionalProps[]>([]);
+  const nav = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (checkoutMovie === null) return;
@@ -32,7 +37,26 @@ const PopcornSelect = ({
   }, [checkoutMovie]);
 
   const fetchGetAllFoodAdditional = async (movieId: string) => {
-    const res = await fetch(`${Url}/additionalfoodmovie/getallfood/${movieId}`);
+    const token = localStorage.getItem('token');
+    const userLocation = location.state.user;
+
+    if (token == null || token.length <= 0) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
+    const res = await fetch(`${Url}/additionalfoodmovie/getallfood/${movieId}`, {
+      headers: {
+        uid: user.id,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (res.status === 403) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
     if (res.status === 200) {
       const json = await res.json();
       const data = json.data;

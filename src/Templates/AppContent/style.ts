@@ -8,9 +8,10 @@ interface ContainerMainProps {
 
 export const ContainerMain = styled.div<ContainerMainProps>`
   position: relative;
+  width: 100%;
+  /* background: white; */
   /* height: 100vh; */
   /* overflow-y: hidden; */
-  width: 100%;
   /* height: 100%; */
   /* background: ${props => props.$ishome === "true" && "#4e4b4b" };
   background: ${props => props.$isfilm === "true" && "#4c4c4c"}; */

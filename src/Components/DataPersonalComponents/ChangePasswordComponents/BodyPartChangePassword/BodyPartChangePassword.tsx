@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import PasswordSvg from '../../../../Svg/PasswordSvg';
 import InputWarning from '../../../RegistrationComponents/InputWarning/InputWarning';
 import RequirementPassword from '../../../RegistrationComponents/RequirementPassword/RequirementPassword';
@@ -7,6 +7,10 @@ import { Url } from '../../../../Utils/Url';
 import { useNavigate } from 'react-router-dom';
 import XExitSvg from '../../../../Svg/XExitSvg';
 import PadlockIngress from '../../../../Svg/PadlockIngress';
+import {
+  ContextMyOrders,
+  ContextMyOrdersProps,
+} from '../../../../Templates/SettingsAccount/SettingsAccount';
 
 interface BodyPartChangePasswordProps {
   changePassword: boolean;
@@ -176,6 +180,7 @@ const BodyPartChangePassword = ({
   }, []);
 
   const [passwordInvalidInformed, setPasswordInvalidInformed] = useState(true);
+  const useContextMyOrders = useContext<ContextMyOrdersProps | null>(ContextMyOrders);
 
   const handleReturn = () => {
     setChangePassword(false);
@@ -201,13 +206,30 @@ const BodyPartChangePassword = ({
       IdGuid: idGuid,
     };
 
+    if (useContextMyOrders.userObj === null) return;
+    const { id } = useContextMyOrders.userObj;
+
+    const token = localStorage.getItem('token');
+
+    if (token == null || token.length <= 0) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
     const res = await fetch(`${Url}/user/update-user-password`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        uid: id,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(objChangePassword),
     });
+
+    if (res.status === 403) {
+      nav('/', { state: { user: null } });
+      return;
+    }
 
     setTimeout(async () => {
       if (res.status === 400) {

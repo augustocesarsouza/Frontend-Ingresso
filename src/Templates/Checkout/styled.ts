@@ -1,8 +1,13 @@
 import styled, { keyframes } from 'styled-components';
 
-export const ContainerMain = styled.div`
+interface ContainerMainProps {
+  $whatclicked: number;
+}
+
+export const ContainerMain = styled.div<ContainerMainProps>`
   background: white;
-  height: 100vh;
+  /* height: 100vh; */
+  height: ${props => props.$whatclicked === 3 ? "auto" : "100vh"};
 `
 
 export const ContainerMiddle = styled.div`

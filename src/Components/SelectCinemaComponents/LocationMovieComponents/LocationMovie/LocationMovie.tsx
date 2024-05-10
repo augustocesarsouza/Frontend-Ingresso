@@ -59,7 +59,25 @@ const LocationMovie = ({
   }, [movieSelected]);
 
   const getRegionCinema = async (location = 'Campinas', idMovie: string) => {
-    const res = await fetch(`${Url}/cinemaMovie/getAll/${location}/${idMovie}`);
+    const token = localStorage.getItem('token');
+
+    if (token == null || token.length <= 0) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
+    const res = await fetch(`${Url}/cinemaMovie/getAll/${location}/${idMovie}`, {
+      headers: {
+        uid: userObj.id,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (res.status === 403) {
+      nav('/', { state: { user: null } });
+      return;
+    }
+
     if (res.status === 200) {
       const json = await res.json();
       const data = json.data;
@@ -77,10 +95,11 @@ const LocationMovie = ({
 
     cinemaMovie.forEach((el) => {
       const hours = el.screeningSchedule.split(',');
+
       setListHoursKeyValue((prev) => {
         const objKey = {
           ...prev,
-          [el.cinemaDTO.ranking]: hours,
+          [el.cinemaDTO.id]: hours,
         };
         return objKey;
       });
@@ -167,8 +186,16 @@ const LocationMovie = ({
                 rankingType="LEGENDADO"
               />
 
-              <RankingLegendaVip el={el} listHoursKeyValue={listHoursKeyValue} />
-              <RankingLegendaVipSecond el={el} listHoursKeyValue={listHoursKeyValue} />
+              <RankingLegendaVip
+                el={el}
+                listHoursKeyValue={listHoursKeyValue}
+                handleClickHourMovie={handleClickHourMovie}
+              />
+              <RankingLegendaVipSecond
+                el={el}
+                listHoursKeyValue={listHoursKeyValue}
+                handleClickHourMovie={handleClickHourMovie}
+              />
             </Styled.ContainerCinemaRegionHours>
           ))}
         </>
@@ -191,8 +218,16 @@ const LocationMovie = ({
                   handleClickHourMovie={handleClickHourMovie}
                   rankingType="LEGENDADO"
                 />
-                <RankingLegendaVip el={el} listHoursKeyValue={listHoursKeyValue} />
-                <RankingLegendaVipSecond el={el} listHoursKeyValue={listHoursKeyValue} />
+                <RankingLegendaVip
+                  el={el}
+                  listHoursKeyValue={listHoursKeyValue}
+                  handleClickHourMovie={handleClickHourMovie}
+                />
+                <RankingLegendaVipSecond
+                  el={el}
+                  listHoursKeyValue={listHoursKeyValue}
+                  handleClickHourMovie={handleClickHourMovie}
+                />
               </Styled.ContainerCinemaRegionHours>
             ))}
         </>

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const ContainerMain = styled.div`
+    background: #282828fa;
 `
 
 export const ContainerFirstHeader = styled.div`
