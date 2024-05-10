@@ -3,7 +3,7 @@ import * as Styled from './styled';
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import InputAllCardCredit from '../InputAllCardCredit/InputAllCardCredit';
-import SaveCreditCardForNextPayment from '../SaveCreditCardNextPay/SaveCreditCardForNextPayment';
+import SaveCreditCardForNextPayment from '../SaveCreditCardNextPay/SaveCreditCardNextPay';
 import BecauseSaveMyCard from '../BecauseSaveMyCard/BecauseSaveMyCard';
 import InfoWhenBuying from '../InfoWhenBuying/InfoWhenBuying';
 

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CreditCard from '../CardForPayMethod/CreditCardComponents/CreditCard/CreditCard';
+import CreditCard from '../CardForPayMethod/CreditCardCom/CreditCard/CreditCard';
 import * as Styled from './styled';
 import { useState } from 'react';
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons';

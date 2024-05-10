@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import SaveCreditCardForNextPayment from './SaveCreditCardForNextPayment';
+import SaveCreditCardForNextPayment from './SaveCreditCardNextPay';
 
 describe('SaveCreditCardForNextPayment', () => {
   test('should render, svgCheck, span', () => {
