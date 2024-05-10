@@ -7,7 +7,7 @@ import { GlobalStyle } from '../../Style/GlobalStyle';
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
+      <BrowserRouter basename={'/Frontend-Ingresso/'}>
         <AppContent />
       </BrowserRouter>
       <GlobalStyle />
