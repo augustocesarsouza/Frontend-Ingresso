@@ -1,9 +1,5 @@
 import { render, screen } from '@testing-library/react';
-<<<<<<< HEAD
 import SaveCreditCardForNextPayment from './SaveCreditCardForNextPayment';
-=======
-import SaveCreditCardForNextPayment from './SaveCreditCardNextPay';
->>>>>>> 28fa0e61d598a7cf22eaae7554d50f9f3eb9644a
 
 describe('SaveCreditCardForNextPayment', () => {
   test('should render, svgCheck, span', () => {
