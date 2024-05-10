@@ -5,12 +5,19 @@ describe('RankingLegendaVipSecond', () => {
   const cinemaDTO = {
     district: 'Estrada de campo limpo, 459 | Santo Amaro',
     nameCinema: 'Cine Araújo Campo Limpo',
-    ranking: 'LEGENDADO, VIP',
+    ranking: 'DUBLADO',
+    id: '698e5eaf-d2a8-4ccb-8134-090e6a6ab982',
   };
 
   const objCinemaMovie = {
     cinemaDTO,
-    screeningSchedule: '21:40L, 13:40LV, 17:00LV, 20:20LV',
+    screeningSchedule: '17:00D, 19:15D, 21:30D',
+    IsOnlyLegVip: 1,
+    IsOnlyLegImax: 1,
+    IsOnlyDubVip: 1,
+    IsOnlyDubImax: 1,
+    IsOnlyDubLeg: 1,
+    IsOnlyLegVipImax: 1,
   };
 
   const key = 0;
@@ -20,12 +27,14 @@ describe('RankingLegendaVipSecond', () => {
     [key]: arrayHours,
   };
 
+  let fn = jest.fn();
+
   test('should render Ranking LegendaVipSecond', () => {
     const { debug } = render(
       <RankingLegendaVipSecond
         el={objCinemaMovie}
         listHoursKeyValue={listHoursKeyValue}
-        index={key}
+        handleClickHourMovie={fn}
       />
     );
 

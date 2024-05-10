@@ -1,27 +1,23 @@
 import { render, screen } from '@testing-library/react';
 import InfoMovieLocalSeatsPriceDetails from './InfoMovieLocalSeatsPriceDetails';
 
-// export interface cinemaMovieProps {
-//   cinemaDTO: CinemaDTO;
-//   screeningSchedule: string;
-// }
-
-// interface CinemaDTO {
-//   district: string;
-//   nameCinema: string;
-//   ranking: string;
-// }
-
 describe('InfoMovieLocalSeatsPriceDetails', () => {
   const cinemaDTO = {
     district: 'Estrada de campo limpo, 459 | Santo Amaro',
     nameCinema: 'Cine Araújo Campo Limpo',
     ranking: 'DUBLADO',
+    id: '698e5eaf-d2a8-4ccb-8134-090e6a6ab982',
   };
 
   const objCinemaMovie = {
     cinemaDTO,
     screeningSchedule: '17:00D, 19:15D, 21:30D',
+    IsOnlyLegVip: 1,
+    IsOnlyLegImax: 1,
+    IsOnlyDubVip: 1,
+    IsOnlyDubImax: 1,
+    IsOnlyDubLeg: 1,
+    IsOnlyLegVipImax: 1,
   };
 
   test('should render paragraph, svgs', () => {

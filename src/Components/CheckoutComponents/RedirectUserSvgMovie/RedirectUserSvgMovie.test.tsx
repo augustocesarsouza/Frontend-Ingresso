@@ -3,25 +3,15 @@ import RedirectUserSvgMovie from './RedirectUserSvgMovie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCouch } from '@fortawesome/free-solid-svg-icons';
 
-// interface RedirectUserSvgMovieProps {
-//   svg: React.ReactElement;
-//   text: string;
-//   svgActive: boolean;
-//   seatJoinList: string[];
-//   paymentSelectSeats: paymentSelectSeatsProps[];
-// }
-
 describe('RedirectUserSvgMovie', () => {
   test('should render, choice of seats', () => {
     const seatJoinList = ['E 2', 'E 3'];
-    const svgOrdersClicked = false;
     const text = 'ESCOLHA DE ASSENTOS';
 
     const { container } = render(
       <RedirectUserSvgMovie
         svg={<FontAwesomeIcon icon={faCouch} />}
         text={text}
-        svgActive={svgOrdersClicked}
         seatJoinList={seatJoinList}
         stringFullTypeTicked={[]}
       />
@@ -49,7 +39,6 @@ describe('RedirectUserSvgMovie', () => {
 
   test('should render, ticket types', () => {
     const seatJoinList = [];
-    const svgOrdersClicked = false;
     const text = 'TIPOS DE INGRESSOS';
     const stringFullTypeTicked = ['Meia Bradesco (1)', 'Meia (1)'];
 
@@ -58,7 +47,6 @@ describe('RedirectUserSvgMovie', () => {
         svg={<FontAwesomeIcon icon={faCouch} />}
         text={text}
         stringFullTypeTicked={stringFullTypeTicked}
-        svgActive={svgOrdersClicked}
         seatJoinList={seatJoinList}
       />
     );
@@ -85,7 +73,6 @@ describe('RedirectUserSvgMovie', () => {
 
   test('should render, add popcorn to the order', () => {
     const seatJoinList = [];
-    const svgOrdersClicked = false;
     const text = 'ADICIONAR PIPOCA AO PEDIDO?';
     const stringFullTypeTicked = [''];
 
@@ -94,7 +81,6 @@ describe('RedirectUserSvgMovie', () => {
         svg={<FontAwesomeIcon icon={faCouch} />}
         text={text}
         stringFullTypeTicked={stringFullTypeTicked}
-        svgActive={svgOrdersClicked}
         seatJoinList={seatJoinList}
       />
     );
@@ -111,7 +97,6 @@ describe('RedirectUserSvgMovie', () => {
 
   test('should render, form of payment', () => {
     const seatJoinList = [];
-    const svgOrdersClicked = false;
     const text = 'FORMA DE PAGAMENTO';
     const stringFullTypeTicked = [''];
 
@@ -120,7 +105,6 @@ describe('RedirectUserSvgMovie', () => {
         svg={<FontAwesomeIcon icon={faCouch} />}
         text={text}
         stringFullTypeTicked={stringFullTypeTicked}
-        svgActive={svgOrdersClicked}
         seatJoinList={seatJoinList}
       />
     );

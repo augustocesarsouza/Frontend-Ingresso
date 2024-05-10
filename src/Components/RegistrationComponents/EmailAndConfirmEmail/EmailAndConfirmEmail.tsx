@@ -31,7 +31,6 @@ const EmailAndConfirmEmail = ({
   const refInputEmail = useRef<HTMLInputElement | null>(null);
   const refInputConfirmEmail = useRef<HTMLInputElement | null>(null);
   // const [connection, setConnection] = useState<signalR.HubConnection | null>(null);
-  const [existEmail, setExistEmail] = useState(false);
 
   // const startConnection = async () => {
   //   const newConnection = new signalR.HubConnectionBuilder()

@@ -13,7 +13,7 @@ import PartOfLowPaymentInformation from '../../Components/CheckoutComponents/Par
 import ChoiceSeats from '../../Components/CheckoutComponents/ChoiceSeats/ChoiceSeats';
 import MethodPayment from '../../Components/CheckoutComponents/MethodPayment/MethodPayment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleExclamation, faThumbsUp, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export interface User {
   id: string;

@@ -18,9 +18,10 @@ describe('DateForFilm', () => {
   };
 
   const dataList = [objData1, objData2];
+  let fn = jest.fn();
 
   test('should render days and days of the week', () => {
-    render(<DateForFilm next7Days={dataList} />);
+    render(<DateForFilm next7Days={dataList} setDataSelected={fn} />);
 
     const firstDay = screen.getByText(dataList[0].dayYear);
     const DayWeek1 = screen.getByText(dataList[0].dayYear);

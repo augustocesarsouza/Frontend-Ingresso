@@ -1,9 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CardCredit from '../../../../../Svg/CardCredit';
-import CheckSvg from '../../../../../Svg/CheckSvg';
 import * as Styled from './styled';
-import { faCreditCard, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CardCreditTopPart from '../CardCreditTopPart/CardCreditTopPart';
 import CardCreditBodyPart from '../CardCreditBodyPart/CardCreditBodyPart';
 

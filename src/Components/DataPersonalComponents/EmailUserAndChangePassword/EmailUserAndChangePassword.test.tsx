@@ -4,7 +4,9 @@ import EmailUserAndChangePassword from './EmailUserAndChangePassword';
 describe('EmailUserAndChangePassword', () => {
   test('should render svgEmail, span email user, svgPadlock, link changePassword', () => {
     const email = 'augustocesarsantana90@gmail.com';
-    const { container } = render(<EmailUserAndChangePassword emailUser={email} />);
+    const { container } = render(
+      <EmailUserAndChangePassword emailUser={email} idGuid="a5d0b2be-d89a-464e-b64b-5506a5b326d5" />
+    );
 
     const emailSvg = container.querySelector('.svg-email');
     expect(emailSvg).toBeInTheDocument();

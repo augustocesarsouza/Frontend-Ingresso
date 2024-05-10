@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import * as Styled from './styled';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
 import ShowClickCvv from '../ShowClickCvv/ShowClickCvv';
 
 const WhatCvv = () => {

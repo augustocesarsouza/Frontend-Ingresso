@@ -9,8 +9,15 @@ describe('PopcornSelect', () => {
 
     const fn = jest.fn();
 
+    const user = {
+      id: '248a7c5a-4ef2-4ebf-a298-21b35b3beb94',
+      email: 'lucas@gmail.com',
+      name: 'lucas',
+    };
+
     render(
       <PopcornSelect
+        user={user}
         whatClicked={whatClicked}
         checkoutMovie={null}
         listProducts={listProducts}

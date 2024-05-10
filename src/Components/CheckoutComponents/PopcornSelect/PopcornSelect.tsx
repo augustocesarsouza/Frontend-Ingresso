@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Url } from '../../../Utils/Url';
 import { CheckoutMovie, User, listProductsProps } from '../../../Templates/Checkout/Checkout';
 import ListFoodAdditional from '../ListFoodAdditional/ListFoodAdditional';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export interface listFoodAdditionalProps {
   fee: string;
@@ -29,7 +29,6 @@ const PopcornSelect = ({
 }: PopcornSelectProps) => {
   const [listFoodAdditional, setListFoodAdditional] = useState<listFoodAdditionalProps[]>([]);
   const nav = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     if (checkoutMovie === null) return;
@@ -38,7 +37,6 @@ const PopcornSelect = ({
 
   const fetchGetAllFoodAdditional = async (movieId: string) => {
     const token = localStorage.getItem('token');
-    const userLocation = location.state.user;
 
     if (token == null || token.length <= 0) {
       nav('/', { state: { user: null } });

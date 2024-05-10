@@ -6,8 +6,14 @@ describe('ChoiceSeats', () => {
     const fn = jest.fn();
     const whatClicked = 1;
     const seatJoinList = [];
+    const ticketsSeats = ['A1', 'A2', 'A3', 'A4'];
     render(
-      <ChoiceSeats whatClicked={whatClicked} seatJoinList={seatJoinList} handleSeatClicked={fn} />
+      <ChoiceSeats
+        whatClicked={whatClicked}
+        ticketsSeats={ticketsSeats}
+        seatJoinList={seatJoinList}
+        handleSeatClicked={fn}
+      />
     );
 
     const span1 = screen.getByText('Escolha seus assentos:');

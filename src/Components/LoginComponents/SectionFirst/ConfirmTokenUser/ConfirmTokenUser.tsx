@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import XExitSvg from '../../../../Svg/XExitSvg';
 import Button from '../../SectionSecond/Button/Button';
 import * as Styled from './styled';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { Url } from '../../../../Utils/Url';
 

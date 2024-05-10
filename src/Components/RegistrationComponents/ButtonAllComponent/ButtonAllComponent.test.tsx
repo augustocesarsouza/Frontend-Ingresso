@@ -3,9 +3,24 @@ import { MemoryRouter } from 'react-router-dom';
 import ButtonAllComponent from './ButtonAllComponent';
 
 describe('ButtonAllComponent', () => {
+  const objUpdateRegisterUser = {
+    BirthDate: '',
+    BirthDateString: '',
+    Gender: '',
+    Phone: '',
+    Cep: '',
+    Logradouro: '',
+    Numero: '',
+    Complemento: '',
+    Referencia: '',
+    Bairro: '',
+    Estado: '',
+    Cidade: '',
+  };
+
   test('should', () => {
     const fn = jest.fn();
-    const { debug } = render(
+    render(
       <MemoryRouter>
         <ButtonAllComponent
           setVerifyFields={fn}
@@ -26,9 +41,18 @@ describe('ButtonAllComponent', () => {
           valueOfEmailConfirm=""
           valueOfName=""
           valueOfPassword=""
+          objUpdateRegisterUser={objUpdateRegisterUser}
+          passwordConfirm=""
+          nameUserChangeBoolean={true}
+          nameUserChange=""
+          changeOrNot={false}
+          setSenhaInvalida={fn}
+          whatComponentImRendering=""
+          setActiveReCaptcha={fn}
+          setChangeOrNot={fn}
+          setUpdatedSucessDataUser={fn}
         />
       </MemoryRouter>
     );
-    // debug();
   });
 });

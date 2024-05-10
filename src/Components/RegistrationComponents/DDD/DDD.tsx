@@ -63,7 +63,7 @@ const DDD = ({ setDDDInfo, dddInfo, dd, setDD }: DDDProps) => {
     };
   }, []);
 
-  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = () => {
     setTypeInputDDD((prev) => !prev);
     if (backspacePress) {
       const firstUnderscoreIndex = hasValueInput.indexOf('_');

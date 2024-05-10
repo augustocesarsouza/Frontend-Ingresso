@@ -44,13 +44,15 @@ describe('TicketTypes', () => {
     const listFormPayment = [obj1, obj2, obj3, obj4, obj5];
 
     const obj1PaymentSelect = {
-      amountSeats: 1,
       paymentName: 'Meia Vivo Valoriza',
+      amountSeats: 1,
+      nameSeats: ['E 2', 'E 3'],
     };
 
     const obj2PaymentSelect = {
       amountSeats: 1,
       paymentName: 'Inteira',
+      nameSeats: ['E 2', 'E 3'],
     };
 
     const paymentSelectSeats = [obj1PaymentSelect, obj2PaymentSelect];

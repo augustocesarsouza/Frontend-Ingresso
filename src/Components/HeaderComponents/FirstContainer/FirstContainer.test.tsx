@@ -3,8 +3,18 @@ import FirstContainer from './FirstContainer';
 import { RenderTheme } from '../../../Style/RenderTheme';
 
 describe('FirstContainer', () => {
+  let openChooseLocation = false;
+  const jn = jest.fn();
+
   test('should render image', () => {
-    RenderTheme(<FirstContainer />);
+    RenderTheme(
+      <FirstContainer
+        openChooseLocation={openChooseLocation}
+        setOpenChooseLocation={jn}
+        handleMouseEnter={jn}
+        handleMouseLeave={jn}
+      />
+    );
 
     const img = screen.getByAltText('img-logo-ingresso');
 
@@ -12,7 +22,14 @@ describe('FirstContainer', () => {
   });
 
   test('should render image with correct src', () => {
-    RenderTheme(<FirstContainer />);
+    RenderTheme(
+      <FirstContainer
+        openChooseLocation={openChooseLocation}
+        setOpenChooseLocation={jn}
+        handleMouseEnter={jn}
+        handleMouseLeave={jn}
+      />
+    );
 
     const img = screen.getByAltText('img-logo-ingresso');
 
@@ -23,7 +40,14 @@ describe('FirstContainer', () => {
   });
 
   test('should render svg LocationSvg', () => {
-    RenderTheme(<FirstContainer />);
+    RenderTheme(
+      <FirstContainer
+        openChooseLocation={openChooseLocation}
+        setOpenChooseLocation={jn}
+        handleMouseEnter={jn}
+        handleMouseLeave={jn}
+      />
+    );
 
     const containerLocation = screen.getByTestId('container-location');
     const svgLocation = containerLocation.firstChild as SVGElement;
@@ -32,7 +56,14 @@ describe('FirstContainer', () => {
   });
 
   test('should render pLocation', () => {
-    RenderTheme(<FirstContainer />);
+    RenderTheme(
+      <FirstContainer
+        openChooseLocation={openChooseLocation}
+        setOpenChooseLocation={jn}
+        handleMouseEnter={jn}
+        handleMouseLeave={jn}
+      />
+    );
 
     const pLocation = screen.getByText('Exemplo');
 
@@ -40,7 +71,14 @@ describe('FirstContainer', () => {
   });
 
   test('should matchSnapshot', () => {
-    const { container } = RenderTheme(<FirstContainer />);
+    const { container } = RenderTheme(
+      <FirstContainer
+        openChooseLocation={openChooseLocation}
+        setOpenChooseLocation={jn}
+        handleMouseEnter={jn}
+        handleMouseLeave={jn}
+      />
+    );
 
     expect(container).toMatchSnapshot();
   });

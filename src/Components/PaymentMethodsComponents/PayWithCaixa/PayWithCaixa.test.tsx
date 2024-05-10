@@ -3,7 +3,7 @@ import PayWithCaixa from './PayWithCaixa';
 
 describe('PayWithCaixa', () => {
   test('should render', () => {
-    const { debug } = render(<PayWithCaixa />);
+    render(<PayWithCaixa />);
     // debug();
 
     const imgCaixa = screen.getByAltText('caixa-img');

@@ -69,7 +69,7 @@ describe('TicketInfoChosen', () => {
     expect(span1).toBeInTheDocument();
 
     paymentSelectSeats.forEach((pay) => {
-      listFormPayment.forEach((pri, i) => {
+      listFormPayment.forEach((pri) => {
         if (pri.formName === pay.paymentName) {
           const span2 = screen.getByText(`${pay.amountSeats}x`);
           expect(span2).toBeInTheDocument();

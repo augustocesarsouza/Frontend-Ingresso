@@ -26,7 +26,7 @@ describe('ProductsInfoChosen', () => {
     const span1 = screen.getByText('PRODUTOS');
     expect(span1).toBeInTheDocument();
 
-    listProducts.forEach((prod, i) => {
+    listProducts.forEach((prod) => {
       const span2 = screen.getByText(`${prod.selectNumber}x`);
       expect(span2).toBeInTheDocument();
 

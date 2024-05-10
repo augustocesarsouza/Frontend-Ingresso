@@ -2,9 +2,21 @@ import { render, screen } from '@testing-library/react';
 import BirthdayAndGender from './BirthdayAndGender';
 
 describe('BirthdayAndGender', () => {
+  let whatComponentImRendering = '';
+  let birthday = '';
+  let gender = '';
+
   test('should render every month', () => {
     const fn = jest.fn();
-    render(<BirthdayAndGender setBirthday={fn} setGender={fn} />);
+    render(
+      <BirthdayAndGender
+        setBirthday={fn}
+        setGender={fn}
+        whatComponentImRendering={whatComponentImRendering}
+        birthday={birthday}
+        gender={gender}
+      />
+    );
 
     const optionFirst = screen.getByRole('option', { name: 'Mês de aniversário' });
     const january = screen.getByRole('option', { name: 'Janeiro' });
@@ -39,7 +51,15 @@ describe('BirthdayAndGender', () => {
 
   test('should render option gender', () => {
     const fn = jest.fn();
-    render(<BirthdayAndGender setBirthday={fn} setGender={fn} />);
+    render(
+      <BirthdayAndGender
+        setBirthday={fn}
+        setGender={fn}
+        whatComponentImRendering={whatComponentImRendering}
+        birthday={birthday}
+        gender={gender}
+      />
+    );
 
     const optionFirst = screen.getByRole('option', { name: 'Prefiro não informar' });
     const female = screen.getByRole('option', { name: 'Feminino' });

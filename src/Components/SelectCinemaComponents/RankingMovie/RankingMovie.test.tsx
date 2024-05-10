@@ -2,8 +2,10 @@ import { render, screen } from '@testing-library/react';
 import RankingMovie from './RankingMovie';
 
 describe('RankingMovie', () => {
+  let fn = jest.fn();
+
   test('should render, paragraph, ranking Movie', () => {
-    render(<RankingMovie />);
+    render(<RankingMovie setRankingMovieList={fn} />);
 
     const pDublado = screen.getByText('DUBLADO');
     expect(pDublado).toBeInTheDocument();

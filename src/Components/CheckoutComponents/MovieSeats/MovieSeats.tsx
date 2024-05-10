@@ -21,7 +21,7 @@ const MovieSeats = ({
   handleSeatClicked,
   setMouseEnterOrLeaveZoom,
 }: MovieSeatsProps) => {
-  const [numberRow, setNumberRow] = useState(26);
+  const [numberRow] = useState(26);
   const [listRow, setListRow] = useState<number[] | null>(null);
   const [listRowName, setListRowName] = useState<string[] | null>(null);
   const [listRowNameNotAppear, setListRowNameNotAppear] = useState<string[]>([]);

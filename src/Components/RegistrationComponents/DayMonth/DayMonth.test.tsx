@@ -14,7 +14,14 @@ describe('DayMonth', () => {
     const dayMes = [1, 2, 3];
 
     render(
-      <DayMonth SelectDayOfMonthRef={selectDayOfMonthRef} handleCLickOption={fn} dayMes={dayMes} />
+      <DayMonth
+        SelectDayOfMonthRef={selectDayOfMonthRef}
+        handleCLickOption={fn}
+        dayMes={dayMes}
+        whatComponentImRendering=""
+        valueDay={1}
+        setValueDay={fn}
+      />
     );
 
     const options1 = screen.getByRole('option', { name: '1' });

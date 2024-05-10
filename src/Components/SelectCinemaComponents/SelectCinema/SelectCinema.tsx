@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as Styled from './styled';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Url } from '../../../Utils/Url';
 import FirstContainer from '../../HeaderComponents/FirstContainer/FirstContainer';
 import SecondContainer from '../../HeaderComponents/SecondContainer/SecondContainer';

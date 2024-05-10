@@ -9,7 +9,7 @@ describe('PayPalTopPart', () => {
     const mouseEnterLabel = '';
     const fn = jest.fn();
 
-    const { debug, container } = render(
+    const { container } = render(
       <PayPalTopPart
         clickLabel={clickLabel}
         totalValuePrice={totalValuePrice}

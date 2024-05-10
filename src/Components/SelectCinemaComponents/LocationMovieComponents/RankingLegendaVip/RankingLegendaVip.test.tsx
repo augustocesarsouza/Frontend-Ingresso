@@ -5,24 +5,38 @@ describe('RankingLegendaVip', () => {
   const cinemaDTO = {
     district: 'Estrada de campo limpo, 459 | Santo Amaro',
     nameCinema: 'Cine Araújo Campo Limpo',
-    ranking: 'LEGENDADO, VIP',
+    ranking: 'DUBLADO',
+    id: '698e5eaf-d2a8-4ccb-8134-090e6a6ab982',
   };
 
   const objCinemaMovie = {
     cinemaDTO,
     screeningSchedule: '17:00D, 19:15D, 21:30D',
+    IsOnlyLegVip: 1,
+    IsOnlyLegImax: 1,
+    IsOnlyDubVip: 1,
+    IsOnlyDubImax: 1,
+    IsOnlyDubLeg: 1,
+    IsOnlyLegVipImax: 1,
   };
 
-  const key = 0;
   const arrayHours = ['17:00D', '19:15D', '21:30D'];
+
+  let key = 1;
 
   const listHoursKeyValue = {
     [key]: arrayHours,
   };
 
+  let fn = jest.fn();
+
   test('should render ranking dublado', () => {
     render(
-      <RankingLegendaVip el={objCinemaMovie} listHoursKeyValue={listHoursKeyValue} index={key} />
+      <RankingLegendaVip
+        el={objCinemaMovie}
+        listHoursKeyValue={listHoursKeyValue}
+        handleClickHourMovie={fn}
+      />
     );
 
     const spanDublado = screen.getByText('LEGENDADO');
