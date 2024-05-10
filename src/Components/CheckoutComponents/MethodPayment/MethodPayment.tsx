@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CreditCard from '../CardForPaymentMethodComponent/CreditCardComponents/CreditCard/CreditCard';
+import CreditCard from '../CardForPayMethod/CreditCardComponents/CreditCard/CreditCard';
 import * as Styled from './styled';
 import { useState } from 'react';
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
-import DebitCard from '../CardForPaymentMethodComponent/DebitCardComponents/DebitCard/DebitCard';
-import GooglePay from '../CardForPaymentMethodComponent/GooglePayComponents/GooglePay/GooglePay';
-import PayPal from '../CardForPaymentMethodComponent/PayPalComponenets/PayPal/PayPal';
+import DebitCard from '../CardForPayMethod/DebitCardComponents/DebitCard/DebitCard';
+import GooglePay from '../CardForPayMethod/GooglePayComponents/GooglePay/GooglePay';
+import PayPal from '../CardForPayMethod/PayPalComponenets/PayPal/PayPal';
 import ClubeUolSubscriber from '../ClubeUolSubscriber/ClubeUolSubscriber';
 import DiscountCode from '../DiscountCode/DiscountCode';
 
